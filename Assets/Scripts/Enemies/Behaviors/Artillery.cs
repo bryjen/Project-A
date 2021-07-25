@@ -8,21 +8,15 @@ public class Artillery : EnemyBehavior
     [SerializeField] private float movementSpeedVelocity;
 
     [Header("Attack1 Settings")]
-    [SerializeField] private float detectionRange;
+    [SerializeField] private float detectionRange, attackDamage, attackCooldown;
     [SerializeField] private Vector2 rangeOffsetFromCenter;
-    [SerializeField] private float attackDamage;
-    [SerializeField] private float attackCooldown;
     [Space(10)] 
     [SerializeField] private float attackRange;
     [SerializeField] private Vector2 attackRangeOffsetFromCenter;
 
     [Header("Animator Settings")] 
     [SerializeField] private Animator animator;
-    [SerializeField] private AnimationClip attack;
-    [SerializeField] private AnimationClip death;
-    [SerializeField] private AnimationClip idle;
-    [SerializeField] private AnimationClip hit;
-    [SerializeField] private AnimationClip run;
+    [SerializeField] private AnimationClip attack, death, idle, hit, run;
     
     private void Start()
     {    //todo get rid of this once prefabed // only for testing

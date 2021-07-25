@@ -10,23 +10,13 @@ public class MaceGuy : EnemyBehavior
 
     [Header("Attack Settings")]
     [SerializeField] private float attackRange;
-    [SerializeField] private float attack1Damage;
-    [SerializeField] private float cooldownAfterAttack1;
-    [SerializeField] private float attack2Damage;
-    [SerializeField] private float cooldownAfterAttack2;
-    [SerializeField] private float attack3Damage;
-    [SerializeField] private float cooldownAfterAttack3;
+    [SerializeField] private float attack1Damage, cooldownAfterAttack1;
+    [SerializeField] private float attack2Damage, cooldownAfterAttack2;
+    [SerializeField] private float attack3Damage, cooldownAfterAttack3;
 
     [Header("Animator Settings")] 
     [SerializeField] private Animator animator;
-    [SerializeField] private AnimationClip attack1;
-    [SerializeField] private AnimationClip attack2;
-    [SerializeField] private AnimationClip attack3;
-    [SerializeField] private AnimationClip charge1;
-    [SerializeField] private AnimationClip charge2;
-    [SerializeField] private AnimationClip death;
-    [SerializeField] private AnimationClip hit;
-    [SerializeField] private AnimationClip run;
+    [SerializeField] private AnimationClip attack1, attack2, attack3, charge1, charge2, death, hit, run;
 
     private int comboCounter;
 

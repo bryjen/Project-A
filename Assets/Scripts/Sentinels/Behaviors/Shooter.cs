@@ -14,8 +14,8 @@ public class Shooter : SentinelBehavior
     [Header("Behavior Settings")]
     [SerializeField, Min(1f)] private float initialDelay;
     [SerializeField, Min(1)] private int projectilesPerShot;
-    [SerializeField, Min(0.1f)] private float cooldownBetweenProjectiles;    //Cooldown between projectiles in the same shot (if projectiles per shot is greater than 1)
-    [SerializeField, Min(0.1f)] private float cooldownBetweenShots;
+    [SerializeField, Min(0.1f)] private float cooldownBetweenProjectiles, cooldownBetweenShots;
+    //cooldownBetweenProjectiles <=> The time delay after each projectile in the same shot cycle
     
     [Space(20)]
     [SerializeField] private bool HasChargeUpAbility;
@@ -23,12 +23,7 @@ public class Shooter : SentinelBehavior
 
     [Header("Animator Settings")]
     [SerializeField] private Animator animator;
-    [SerializeField] private AnimationClip idle1;
-    [SerializeField] private AnimationClip wakeUpAnimation;
-    [SerializeField] private AnimationClip shootWithFx;
-    [SerializeField] private AnimationClip shoot;
-    [SerializeField] private AnimationClip charge;
-    [SerializeField] private AnimationClip damaged;
+    [SerializeField] private AnimationClip idle1, wakeUpAnimation, shootWithFx, shoot, charge, damaged;
 
     [Header("Sprite Settings")]
     [SerializeField] private SpriteRenderer spriteRenderer;

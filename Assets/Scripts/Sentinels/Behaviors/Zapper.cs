@@ -5,18 +5,14 @@ using UnityEngine;
 public class Zapper : SentinelBehavior
 {
     [Header("Attack Settings")] 
-    [SerializeField, Min(1f)] private float initialDelay;
-    [SerializeField] private float attackDetectionRange;
-    [SerializeField] private float damage;
+    [SerializeField, Min(1f)] private float initialDelay, attackCooldown;
+    [SerializeField] private float attackDetectionRange, damage;
     [SerializeField] private Vector2 rayOffset;
-    [SerializeField] private float attackCooldown;
 
-    [Header("Animator Settings")]
+
+    [Header("Animator Settings")] 
     [SerializeField] private Animator animator;
-    [SerializeField] private AnimationClip wakeUp;
-    [SerializeField] private AnimationClip attack;
-    [SerializeField] private AnimationClip damaged;
-    [SerializeField] private AnimationClip death;
+    [SerializeField] private AnimationClip wakeUp, attack, damaged, death;
 
     [Header("Sprite Settings")]
     [SerializeField] private SpriteRenderer spriteRenderer;

@@ -8,23 +8,17 @@ public class MudGuardian : EnemyBehavior
     [SerializeField] private float movementSpeedVelocity;
 
     [Header("Attack1 Settings")] 
-    [SerializeField] private float attack1Range;
-    [SerializeField] private float attack1Damage;
+    [SerializeField] private float attack1Range, attack1Damage;
 
     [Header("Attack2 Settings")] 
     [SerializeField] private bool isSpecialAttackEnabled;
-    [SerializeField] private float attack2Range;
-    [SerializeField] private float attack2Damage;
+    [SerializeField] private float attack2Range, attack2Damage;
     [SerializeField] private int triggersAfterHowManyAttacks;    //The amount of times Attack1 that happens before Attack2
 
 
     [Header("Animator Settings")] 
     [SerializeField] private Animator animator;
-    [SerializeField] private AnimationClip attack1;
-    [SerializeField] private AnimationClip attack2;
-    [SerializeField] private AnimationClip death;
-    [SerializeField] private AnimationClip hit;
-    [SerializeField] private AnimationClip run;
+    [SerializeField] private AnimationClip attack1, attack2, death, hit, run;
 
     private int attack1Counter;
 
