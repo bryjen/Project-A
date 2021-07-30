@@ -48,6 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 003a26aed85c6a44fa67e78512275e74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  placementOffset: {x: 0, y: 0.1}
   EnergyCost: 125
   entityBoxCollider: {fileID: 0}
   isRaycastsOn: 0

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class SentinelBehavior : MonoBehaviour
 {
+    [SerializeField] protected Vector2 placementOffset;
     [SerializeField] protected int EnergyCost;
     
     [Header("Key Components")]
@@ -19,6 +20,8 @@ public abstract class SentinelBehavior : MonoBehaviour
 
     public abstract IEnumerator StopBehavior();
 
+    public Vector2 GetPlacementOffset() => placementOffset;
+    
     public int GetEnergyCost() => EnergyCost;
     
     protected bool AreAnyTargetsInRange(float range, Vector2 offsetFromCenter)

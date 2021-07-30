@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8746348724503350355}
   - component: {fileID: 8746348724503350356}
   - component: {fileID: 8746348724503350354}
+  - component: {fileID: -375465733299213627}
   m_Layer: 7
   m_Name: Energy Siphon
   m_TagString: Untagged
@@ -29,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 8746348724503350359}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2.49, y: 0.02, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children:
   - {fileID: 8746348725071452159}
   m_Father: {fileID: 0}
@@ -99,6 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6839b2e4fa6a42a4ba289165ebbe3668, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  placementOffset: {x: 0, y: -0.4}
   EnergyCost: 100
   entityBoxCollider: {fileID: 8746348724503350357}
   isRaycastsOn: 1
@@ -107,8 +109,8 @@ MonoBehaviour:
     m_Bits: 256
   energyPrefab: {fileID: 7135476173983753991, guid: 5a254cc26ff559e4f9cb650f4f6a5725, type: 3}
   spawnOffset: {x: 0, y: 1}
-  xVelocityRangeInput: -2 2
-  yVelocityRangeInput: 4 5
+  xVelocityRangeInput: -3 3
+  yVelocityRangeInput: 5 6
   initialDelay: 1
   cooldown: 1
   energyUnitsProduced: 1
@@ -118,6 +120,17 @@ MonoBehaviour:
   idle: {fileID: 7400000, guid: 3c9cb7fac1f53b64984122f56a4e5eea, type: 2}
   hurt: {fileID: 7400000, guid: 0302aea2bd5e1d246b15d4ee746e8d49, type: 2}
   death: {fileID: 7400000, guid: 35e14ef36b71f6f45916a12256487ad2, type: 2}
+--- !u!210 &-375465733299213627
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8746348724503350359}
+  m_Enabled: 1
+  m_SortingLayerID: -538650615
+  m_SortingLayer: 2
+  m_SortingOrder: 1
 --- !u!1 &8746348725071452144
 GameObject:
   m_ObjectHideFlags: 0

@@ -24,7 +24,8 @@ public class GameData : MonoBehaviour
         }
 
         _instance = this;
-        energy = 125;
+        energy = 125124809;
+        textMeshPro.text = energy.ToString();
     }
 
     public int GetEnergy() => energy;

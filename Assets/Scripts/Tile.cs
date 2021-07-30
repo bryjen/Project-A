@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class Tile : MonoBehaviour
 {
@@ -56,8 +57,12 @@ public class Tile : MonoBehaviour
         if (sentinelPreview != null)
             Destroy(sentinelPreview);
 
+        var offset = gameData.selectedSentinel.GetComponent<SentinelBehavior>().GetPlacementOffset();
+        var spawnPosition = (Vector2) transform.position + offset;
+        
         StartNewCoroutine(ChangeColor(new Color(1, 1, 1, 0), .5f));
-        currentSentinel = (GameObject) Instantiate(gameData.selectedSentinel, transform.position, Quaternion.identity);
+        currentSentinel = (GameObject) Instantiate(gameData.selectedSentinel, spawnPosition, Quaternion.identity);
+        currentSentinel.GetComponent<SortingGroup>().sortingOrder = GetOrderInSortingLayer();
     }
 
     private IEnumerator ChangeColor(Color color, float duration)
@@ -83,5 +88,11 @@ public class Tile : MonoBehaviour
         
         colorChangerCoroutine = coroutine;
         StartCoroutine(colorChangerCoroutine);
+    }
+
+    private int GetOrderInSortingLayer()
+    {
+        var row = Convert.ToInt32(gameObject.name.Substring(0, 1));
+        return row + 50;
     }
 }

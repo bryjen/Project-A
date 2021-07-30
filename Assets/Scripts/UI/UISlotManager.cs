@@ -16,7 +16,8 @@ public class UISlotManager : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     [Header("Associated Sentinel Settings")]
     [SerializeField] private GameObject sentinelPrefab;
     [SerializeField] private GameObject sentinelPreviewPrefab;
-    
+
+    private static readonly HashSet<UISlotManager> slotManagers = new HashSet<UISlotManager>();
     private static readonly Color defaultColor = new Color(0.53f, 0.53f, 0.47f);
     private static readonly Color selectedColor = new Color(0.69f, 0.69f, 0.44f);
     
@@ -28,6 +29,20 @@ public class UISlotManager : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     private void Start()
     {
         gameData = GameData.Instance;
+        slotManagers.Add(gameObject.GetComponent<UISlotManager>());
+    }
+
+    public IEnumerator Deselect()
+    {
+        while (currentCoroutine != null)
+            yield return null;
+
+        isEnterExitDisabled = false;
+        StartCoroutine(ColorChanger(defaultColor));
+        StartCoroutine(ReturnSlot());
+        isSelected = false;
+            
+        yield break;
     }
 
     #region OnMouseOver
@@ -106,6 +121,14 @@ public class UISlotManager : MonoBehaviour, IPointerClickHandler, IPointerEnterH
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        foreach (var slotManager in slotManagers)
+        {
+            if (slotManager == this) continue;
+
+            if (slotManager.isSelected)
+                StartCoroutine(slotManager.Deselect());
+        }
+        
         StartCoroutine(OnPointerClickCoroutine());
     }
 
