@@ -99,6 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6839b2e4fa6a42a4ba289165ebbe3668, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnergyCost: 100
   entityBoxCollider: {fileID: 8746348724503350357}
   isRaycastsOn: 1
   EnemyLayerMask:

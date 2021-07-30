@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4804066959579224956}
   - component: {fileID: 4804066959579224959}
   - component: {fileID: 881374955084340876}
+  - component: {fileID: 6470344557539070998}
   m_Layer: 7
   m_Name: Shooter
   m_TagString: Untagged
@@ -47,6 +48,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 003a26aed85c6a44fa67e78512275e74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnergyCost: 125
+  entityBoxCollider: {fileID: 0}
+  isRaycastsOn: 0
+  EnemyLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
   projectilePrefab: {fileID: 7524895788826907731, guid: 2a3eb6d07967c0d40a28c0401f0b9194, type: 3}
   velocity: 7
   spawnOffset: {x: 0.5, y: 0.3}
@@ -116,6 +123,17 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!210 &6470344557539070998
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4804066959579224958}
+  m_Enabled: 1
+  m_SortingLayerID: -538650615
+  m_SortingLayer: 2
+  m_SortingOrder: 1
 --- !u!1 &4804066960185919784
 GameObject:
   m_ObjectHideFlags: 0

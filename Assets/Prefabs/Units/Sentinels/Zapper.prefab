@@ -120,16 +120,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c28922b55a6cc9b4ab622fdfef5fa6dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnergyCost: 50
   entityBoxCollider: {fileID: 6821638522946272773}
   isRaycastsOn: 1
   EnemyLayerMask:
     serializedVersion: 2
     m_Bits: 256
   initialDelay: 1
+  attackCooldown: 0.8
   attackDetectionRange: 1
   damage: 0
   rayOffset: {x: 0, y: 0}
-  attackCooldown: 0.8
   animator: {fileID: 6821638524570852785}
   wakeUp: {fileID: 7400000, guid: ae1686c12427c0a4288cf73c5cb0fcb5, type: 2}
   attack: {fileID: 7400000, guid: 7eaf5ed99d9c64e489bfcb4b4836eab9, type: 2}

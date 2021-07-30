@@ -21,8 +21,14 @@ public class UISlotManager : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     private static readonly Color selectedColor = new Color(0.69f, 0.69f, 0.44f);
     
     private IEnumerator currentCoroutine;
+    private GameData gameData;
     private bool isEnterExitDisabled;
     private bool isSelected;
+
+    private void Start()
+    {
+        gameData = GameData.Instance;
+    }
 
     #region OnMouseOver
 
@@ -113,12 +119,17 @@ public class UISlotManager : MonoBehaviour, IPointerClickHandler, IPointerEnterH
 
         if (isSelected)
         {
+            gameData.selectedSentinel = null;
+            gameData.selectedSentinelPreview = null;
+            
             isEnterExitDisabled = false;
             StartCoroutine(ColorChanger(defaultColor));
             isSelected = false;
             
             yield break;
         }
+        gameData.selectedSentinel = sentinelPrefab;
+        gameData.selectedSentinelPreview = sentinelPreviewPrefab;
         
         isEnterExitDisabled = true;
         StartCoroutine(ColorChanger(selectedColor));

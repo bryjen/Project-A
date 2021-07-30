@@ -14,7 +14,7 @@ public class Shooter : SentinelBehavior
     [Header("Behavior Settings")]
     [SerializeField, Min(1f)] private float initialDelay;
     [SerializeField, Min(1)] private int projectilesPerShot;
-    [SerializeField, Min(0.1f)] private float cooldownBetweenProjectiles, cooldownBetweenShots;
+    [SerializeField, Min(0)] private float cooldownBetweenProjectiles, cooldownBetweenShots;
     //cooldownBetweenProjectiles <=> The time delay after each projectile in the same shot cycle
     
     [Space(20)]
@@ -39,7 +39,13 @@ public class Shooter : SentinelBehavior
     public override IEnumerator StartBehavior()
     {
         if (!isInitialized)
+        {
+            var gameData = GameData.Instance;
+            gameData.ChangeEnergy(gameData.GetEnergy() - EnergyCost);
+            
             yield return StartCoroutine(Initialize());
+        }
+            
         
         StartCoroutine(DefaultBehavior());
     }
