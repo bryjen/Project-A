@@ -10,6 +10,7 @@ public class Shooter : SentinelBehavior
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private float velocity;
     [SerializeField] private Vector2 spawnOffset;
+    [SerializeField] private int damage;
     
     [Header("Behavior Settings")]
     [SerializeField, Min(1f)] private float initialDelay;
@@ -89,6 +90,10 @@ public class Shooter : SentinelBehavior
     {
         var spawnLocation = transform.position + new Vector3(spawnOffset.x, spawnOffset.y, 0);
         var shooterProjectile = (GameObject) Instantiate(projectilePrefab, spawnLocation, Quaternion.identity);
+        
         shooterProjectile.GetComponent<ProjectileVelocity>().Initialize(velocity);
+        
+        var projectileBehavior = shooterProjectile.GetComponent<ShooterProjectileBehavior>();
+        projectileBehavior.Instantiate(damage, shooterProjectile.GetComponent<Animator>());
     }
 }

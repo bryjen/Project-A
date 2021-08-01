@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class SentinelHealth : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private int health;
 
-    // Update is called once per frame
-    void Update()
+    public int GetHealth() => health;
+
+    public void SetHealth(int newHealth)
     {
-        
+        health = newHealth;
+        if (health <= 0)
+        {
+            Destroy(this.gameObject);
+        }
     }
 }

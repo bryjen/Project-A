@@ -14,9 +14,10 @@ GameObject:
   - component: {fileID: 324680000590953365}
   - component: {fileID: 324680000590953364}
   - component: {fileID: 324680000590953360}
+  - component: {fileID: -1498084382013624437}
   m_Layer: 8
   m_Name: Mace Guy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -130,7 +131,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.29490864, y: -0.07583365}
+  m_Offset: {x: 0.116157725, y: 0.68139386}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -141,8 +142,19 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.168519, y: 1.3707423}
+  m_Size: {x: 1.159865, y: 1.3274722}
   m_EdgeRadius: 0
+--- !u!210 &-1498084382013624437
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 324680000590953370}
+  m_Enabled: 1
+  m_SortingLayerID: -538650615
+  m_SortingLayer: 2
+  m_SortingOrder: 2
 --- !u!1 &324680001627964703
 GameObject:
   m_ObjectHideFlags: 0
@@ -169,7 +181,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 324680001627964703}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -0.089, y: 0.124, z: 0}
+  m_LocalPosition: {x: 0.223, y: 0.834, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 324680000590953371}

@@ -34,4 +34,12 @@ public abstract class EnemyBehavior : MonoBehaviour
         
         return raycastHit2D.collider != null;
     }
+
+    protected RaycastHit2D[] GetTargetsInRange(float range, Vector2 offsetFromCenter)
+    {
+        Vector2 boxColliderCenterBounds = entityBoxCollider.bounds.center;
+        
+        return Physics2D.RaycastAll(boxColliderCenterBounds + offsetFromCenter, 
+            Vector2.left, entityBoxCollider.bounds.extents.x + range, sentinelLayerMask);
+    }
 }
