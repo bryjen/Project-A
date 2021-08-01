@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -41,17 +42,11 @@ public class ShooterProjectileBehavior : MonoBehaviour
     private IEnumerator PlayAnimation()
     {
         animator.Play("Explode");
+        
+        yield return new WaitForSeconds(
+            animator.GetCurrentAnimatorStateInfo(0).length);
 
-        while (true)
-        {
-            if (animator.GetCurrentAnimatorStateInfo(0).IsName("Explode"))
-            {
-                Debug.Log("here");
-                yield break;
-            }
-
-            yield return null;
-        }
+        Destroy(this.gameObject);
     }
 
     private IEnumerator DestroyOnTimeout()

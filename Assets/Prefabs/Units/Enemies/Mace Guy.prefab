@@ -62,6 +62,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78fd83effa4137d479095fde2d52efe3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 220
+  enemyBehaviorScript: {fileID: 324680000590953365}
+  boxCollider: {fileID: 324680000590953360}
+  rigidBody: {fileID: 324680000590953364}
+  sprite: {fileID: 324680001627964698}
+  animator: {fileID: 324680001627964697}
+  animationClipName: Death
 --- !u!114 &324680000590953365
 MonoBehaviour:
   m_ObjectHideFlags: 0

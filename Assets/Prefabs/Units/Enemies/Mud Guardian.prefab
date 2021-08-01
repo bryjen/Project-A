@@ -63,6 +63,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 125
+  enemyBehaviorScript: {fileID: 4922387084395551111}
+  boxCollider: {fileID: 4922387084395551114}
+  rigidBody: {fileID: 4922387084395551115}
+  overheadTimeBeforeDespawn: 0.5
+  sprite: {fileID: 4922387085621260752}
+  animator: {fileID: 4922387085621260753}
+  animationClipName: Death
 --- !u!114 &4922387084395551111
 MonoBehaviour:
   m_ObjectHideFlags: 0
