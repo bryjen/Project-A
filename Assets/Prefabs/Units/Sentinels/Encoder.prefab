@@ -130,7 +130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 367a8107102ac8b469a5a1ace7ffa64c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sentinelBehavior: {fileID: 0}
+  sentinelBehavior: {fileID: 8252370312472321737}
 --- !u!114 &8252370312472321737
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,17 +143,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc05d2321764da74ebbfd7b4061e7aaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  placementOffset: {x: 0, y: 0}
-  EnergyCost: 0
   entityBoxCollider: {fileID: 8252370312472321738}
+  entityRigidBody: {fileID: 0}
+  Timescale: 1
   isRaycastsOn: 1
-  EnemyLayerMask:
+  layerMask:
     serializedVersion: 2
     m_Bits: 256
+  isDirectedLeft: 0
+  EnergyCost: 100
+  PlacementOffset: {x: 0, y: 0}
   initialDelay: 1
   actionTime: 1
-  attackRange: 0
-  doesAttackSlow: 0
+  attackRange: 4.5
+  doesAttackSlow: 1
   doesAttackWeaken: 0
   animator: {fileID: 8252370313794145136}
   teleportIn: {fileID: 7400000, guid: be8b3a7f8a327014fa615becc523602a, type: 2}
@@ -173,7 +176,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.7027668}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -184,7 +187,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1, y: 1.2878804}
   m_EdgeRadius: 0
 --- !u!210 &4747744746716008415
 SortingGroup:

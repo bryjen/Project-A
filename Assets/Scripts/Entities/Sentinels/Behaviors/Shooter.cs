@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.Collections;
 using UnityEngine;
 
-public class Shooter : SentinelBehavior
+public class Shooter : EntityBehavior
 {
     [Header("Projectile Settings")]
     [SerializeField] private GameObject projectilePrefab;
@@ -13,6 +13,7 @@ public class Shooter : SentinelBehavior
     [SerializeField] private int damage;
     
     [Header("Behavior Settings")]
+    
     [SerializeField, Min(1f)] private float initialDelay;
     [SerializeField, Min(1)] private int projectilesPerShot;
     [SerializeField, Min(0)] private float cooldownBetweenProjectiles, cooldownBetweenShots;
@@ -34,15 +35,16 @@ public class Shooter : SentinelBehavior
 
     private void Start()
     {    //todo remove this when done
-        StartCoroutine(StartBehavior());
+        //StartCoroutine(StartBehavior());
     }
+    
 
     public override IEnumerator StartBehavior()
     {
         if (!isInitialized)
         {
             var gameData = GameData.Instance;
-            gameData.ChangeEnergy(gameData.GetEnergy() - EnergyCost);
+            gameData.ChangeEnergy(gameData.GetEnergy() - (int) EnergyCost);
             
             yield return StartCoroutine(Initialize());
         }

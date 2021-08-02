@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 
-public class EnergySiphon : SentinelBehavior
+public class EnergySiphon : EntityBehavior
 {
     [Header("Prefab Settings")] 
     [SerializeField] private GameObject energyPrefab;
@@ -13,8 +13,7 @@ public class EnergySiphon : SentinelBehavior
     [Header("Production Settings")] 
     [SerializeField] private float initialDelay, cooldown;
     [SerializeField] private int energyUnitsProduced, energyAmountPerUnit;
-
-
+    
     [Header("Animator Settings")]
     [SerializeField] private Animator animator;
     [SerializeField] private AnimationClip action, idle, hurt, death;
@@ -40,6 +39,7 @@ public class EnergySiphon : SentinelBehavior
     {
         throw new System.NotImplementedException();
     }
+    
 
     private IEnumerator DefaultBehavior()
     {

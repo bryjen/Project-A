@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 8746348724503350358}
   - component: {fileID: 8746348724503350357}
   - component: {fileID: 8746348724503350355}
-  - component: {fileID: 8746348724503350356}
   - component: {fileID: 8746348724503350354}
   - component: {fileID: -375465733299213627}
+  - component: {fileID: -4010246654690982924}
   m_Layer: 7
   m_Name: Energy Siphon
   m_TagString: Untagged
@@ -74,20 +74,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 367a8107102ac8b469a5a1ace7ffa64c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sentinelBehavior: {fileID: 0}
---- !u!114 &8746348724503350356
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8746348724503350359}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 367a8107102ac8b469a5a1ace7ffa64c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sentinelBehavior: {fileID: 0}
+  sentinelBehavior: {fileID: 8746348724503350354}
 --- !u!114 &8746348724503350354
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -100,13 +87,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6839b2e4fa6a42a4ba289165ebbe3668, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  placementOffset: {x: 0, y: -0.4}
-  EnergyCost: 100
   entityBoxCollider: {fileID: 8746348724503350357}
+  entityRigidBody: {fileID: 0}
   isRaycastsOn: 1
-  EnemyLayerMask:
+  layerMask:
     serializedVersion: 2
     m_Bits: 256
+  isDirectedLeft: 0
+  EnergyCost: 100
+  PlacementOffset: {x: 0, y: 0}
   energyPrefab: {fileID: 7135476173983753991, guid: 5a254cc26ff559e4f9cb650f4f6a5725, type: 3}
   spawnOffset: {x: 0, y: 1}
   xVelocityRangeInput: -3 3
@@ -131,6 +120,26 @@ SortingGroup:
   m_SortingLayerID: -538650615
   m_SortingLayer: 2
   m_SortingOrder: 1
+--- !u!114 &-4010246654690982924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8746348724503350359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2c08356dbde47a44a3a02dcba5a4c7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  overheadTimeBeforeDespawn: 0
+  spriteRenderer: {fileID: 8746348725071452157}
+  animator: {fileID: 8746348725071452158}
+  animationClipName: Death
+  entityBehaviorScript: {fileID: 8746348724503350354}
+  boxCollider: {fileID: 8746348724503350357}
+  rigidBody: {fileID: 0}
+  health: 100
 --- !u!1 &8746348725071452144
 GameObject:
   m_ObjectHideFlags: 0

@@ -48,13 +48,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 003a26aed85c6a44fa67e78512275e74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  placementOffset: {x: 0, y: 0.1}
-  EnergyCost: 125
-  entityBoxCollider: {fileID: 0}
+  entityBoxCollider: {fileID: 881374955084340876}
+  entityRigidBody: {fileID: 0}
   isRaycastsOn: 0
-  EnemyLayerMask:
+  layerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
+  isDirectedLeft: 0
+  EnergyCost: 150
+  PlacementOffset: {x: 0, y: 0.2}
   projectilePrefab: {fileID: 7524895788826907731, guid: 2a3eb6d07967c0d40a28c0401f0b9194, type: 3}
   velocity: 7
   spawnOffset: {x: 0.5, y: 0.3}
@@ -99,6 +101,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2c08356dbde47a44a3a02dcba5a4c7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  overheadTimeBeforeDespawn: 0
+  spriteRenderer: {fileID: 4804066960185919791}
+  animator: {fileID: 4804066960185919788}
+  animationClipName: Death
+  entityBehaviorScript: {fileID: 4804066959579224957}
+  boxCollider: {fileID: 881374955084340876}
+  rigidBody: {fileID: 0}
   health: 200
 --- !u!61 &881374955084340876
 BoxCollider2D:

@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour
+public class SentinelController : MonoBehaviour
 {
-    [SerializeField] private EnemyBehavior enemyBehavior;
+    [SerializeField] private EntityBehavior sentinelBehavior;
 
     private void Start()
     {

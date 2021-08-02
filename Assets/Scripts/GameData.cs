@@ -32,8 +32,8 @@ public class GameData : MonoBehaviour
 
     public int GetEnergyCostOfSelectedPrefab()
     {
-        var sentinelBehavior = selectedSentinel.GetComponent<SentinelBehavior>();
-        return sentinelBehavior.GetEnergyCost();
+        var sentinelBehavior = selectedSentinel.GetComponent<EntityBehavior>();
+        return (int) sentinelBehavior.EnergyCost;
     }
 
     public void ChangeEnergy(int newValue)

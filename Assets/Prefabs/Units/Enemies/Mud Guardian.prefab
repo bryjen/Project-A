@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 4922387084395551114}
   - component: {fileID: 4922387084395551115}
   - component: {fileID: 6701279043208177271}
+  - component: {fileID: -5657319809457912415}
   m_Layer: 8
   m_Name: Mud Guardian
   m_TagString: Enemy
@@ -62,14 +63,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78fd83effa4137d479095fde2d52efe3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 125
-  enemyBehaviorScript: {fileID: 4922387084395551111}
-  boxCollider: {fileID: 4922387084395551114}
-  rigidBody: {fileID: 4922387084395551115}
   overheadTimeBeforeDespawn: 0.5
-  sprite: {fileID: 4922387085621260752}
+  spriteRenderer: {fileID: 4922387085621260752}
   animator: {fileID: 4922387085621260753}
   animationClipName: Death
+  entityBehaviorScript: {fileID: 0}
+  boxCollider: {fileID: 4922387084395551114}
+  rigidBody: {fileID: 4922387084395551115}
+  health: 125
 --- !u!114 &4922387084395551111
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -84,15 +85,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entityBoxCollider: {fileID: 4922387084395551114}
   entityRigidBody: {fileID: 4922387084395551115}
+  Timescale: 1
   isRaycastsOn: 1
-  sentinelLayerMask:
+  layerMask:
     serializedVersion: 2
     m_Bits: 128
+  isDirectedLeft: 1
+  EnergyCost: 0
+  PlacementOffset: {x: 0, y: 0}
   movementSpeedVelocity: 0.75
   attack1Range: 0.5
   attack1Damage: 20
   isSpecialAttackEnabled: 1
-  attack2Range: 1.7
+  attack2Range: 3
   attack2Damage: 40
   triggersAfterHowManyAttacks: 2
   animator: {fileID: 4922387085621260753}
@@ -159,6 +164,20 @@ SortingGroup:
   m_SortingLayerID: -538650615
   m_SortingLayer: 2
   m_SortingOrder: 2
+--- !u!114 &-5657319809457912415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4922387084395551104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6229b532060320e44984cfbe0b192d2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entityBehavior: {fileID: 4922387084395551111}
+  health: {fileID: 4922387084395551110}
 --- !u!1 &4922387085621260755
 GameObject:
   m_ObjectHideFlags: 0

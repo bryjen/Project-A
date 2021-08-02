@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Encoder : SentinelBehavior
+public class Encoder : EntityBehavior
 {
-    [Header("Behavior Settings")] 
+    [Header("Behavior Settings")]
     [SerializeField] private float initialDelay;
     [SerializeField] private float actionTime;
 
@@ -56,10 +56,25 @@ public class Encoder : SentinelBehavior
         yield return new WaitForSeconds(initialDelay);
         
         animator.Play(action.name);
-        yield return new WaitForSeconds(actionTime);
+        yield return new WaitForSeconds(.5f);
+        DebuffEnemiesInRange(GetTargetsInRange(attackRange, Vector2.zero));
+        yield return new WaitForSeconds(actionTime - .5f);
         
-        //todo do an action // write a method to attack
-        
+
         animator.Play(teleportOut.name);
+    }
+
+    private void DebuffEnemiesInRange(RaycastHit2D[] targets)
+    {
+        try
+        {
+            foreach (var target in targets)
+            {
+                if (!target.collider.gameObject.TryGetComponent<DebuffHandler>(out DebuffHandler debuffHandler))
+                    continue;
+                
+                debuffHandler.InflictDebuff(Debuff.ENCODED, 5);
+            }
+        } catch {}
     }
 }

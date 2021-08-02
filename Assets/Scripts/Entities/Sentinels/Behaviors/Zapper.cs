@@ -2,13 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Zapper : SentinelBehavior
+public class Zapper : EntityBehavior
 {
     [Header("Attack Settings")] 
     [SerializeField, Min(1f)] private float initialDelay, attackCooldown;
     [SerializeField] private float attackDetectionRange, damage;
     [SerializeField] private Vector2 rayOffset;
-
 
     [Header("Animator Settings")] 
     [SerializeField] private Animator animator;

@@ -96,6 +96,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2c08356dbde47a44a3a02dcba5a4c7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  overheadTimeBeforeDespawn: 0
+  spriteRenderer: {fileID: 6821638524570852784}
+  animator: {fileID: 6821638524570852785}
+  animationClipName: Death
+  entityBehaviorScript: {fileID: 6821638522946272777}
+  boxCollider: {fileID: 6821638522946272773}
+  rigidBody: {fileID: 6821638522946272774}
+  health: 100
 --- !u!114 &6821638522946272776
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121,13 +129,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c28922b55a6cc9b4ab622fdfef5fa6dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  placementOffset: {x: 0, y: -0.2}
-  EnergyCost: 50
   entityBoxCollider: {fileID: 6821638522946272773}
+  entityRigidBody: {fileID: 0}
   isRaycastsOn: 1
-  EnemyLayerMask:
+  layerMask:
     serializedVersion: 2
     m_Bits: 256
+  isDirectedLeft: 0
+  EnergyCost: 75
+  PlacementOffset: {x: 0, y: 0}
   initialDelay: 1
   attackCooldown: 0.8
   attackDetectionRange: 1

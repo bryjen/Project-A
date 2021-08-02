@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 324680000590953364}
   - component: {fileID: 324680000590953360}
   - component: {fileID: -1498084382013624437}
+  - component: {fileID: -4206064571345443229}
   m_Layer: 8
   m_Name: Mace Guy
   m_TagString: Enemy
@@ -62,13 +63,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78fd83effa4137d479095fde2d52efe3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 220
-  enemyBehaviorScript: {fileID: 324680000590953365}
-  boxCollider: {fileID: 324680000590953360}
-  rigidBody: {fileID: 324680000590953364}
-  sprite: {fileID: 324680001627964698}
+  overheadTimeBeforeDespawn: 0
+  spriteRenderer: {fileID: 324680001627964698}
   animator: {fileID: 324680001627964697}
   animationClipName: Death
+  entityBehaviorScript: {fileID: 0}
+  boxCollider: {fileID: 324680000590953360}
+  rigidBody: {fileID: 324680000590953364}
+  health: 220
 --- !u!114 &324680000590953365
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -83,17 +85,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entityBoxCollider: {fileID: 324680000590953360}
   entityRigidBody: {fileID: 324680000590953364}
+  Timescale: 1
   isRaycastsOn: 1
-  sentinelLayerMask:
+  layerMask:
     serializedVersion: 2
     m_Bits: 128
+  isDirectedLeft: 1
+  EnergyCost: 0
+  PlacementOffset: {x: 0, y: 0}
   movementSpeedVelocity: 0.5
-  attackRange: 3
-  attack1Damage: 0
+  attackRange: 2.5
+  attack1Damage: 25
   cooldownAfterAttack1: 0.75
-  attack2Damage: 0
+  attack2Damage: 35
   cooldownAfterAttack2: 0.75
-  attack3Damage: 0
+  attack3Damage: 55
   cooldownAfterAttack3: 1.2
   animator: {fileID: 324680001627964697}
   attack1: {fileID: 7400000, guid: 3f1c41391e40f004a822d5b4522df3c3, type: 2}
@@ -162,6 +168,20 @@ SortingGroup:
   m_SortingLayerID: -538650615
   m_SortingLayer: 2
   m_SortingOrder: 2
+--- !u!114 &-4206064571345443229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 324680000590953370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6229b532060320e44984cfbe0b192d2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entityBehavior: {fileID: 324680000590953365}
+  health: {fileID: 324680000590953366}
 --- !u!1 &324680001627964703
 GameObject:
   m_ObjectHideFlags: 0

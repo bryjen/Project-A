@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MudGuardian : EnemyBehavior
+public class MudGuardian : EntityBehavior
 {
     [Header("Movement Settings")] 
     [SerializeField] private float movementSpeedVelocity;
@@ -46,11 +46,13 @@ public class MudGuardian : EnemyBehavior
     {
         while (true)
         {
+            animator.speed = Timescale;
+            
             if (AreAnyTargetsInRange(attack1Range, new Vector2(0, -.2f)))
                 yield return StartCoroutine(AttackCycle());
             
             if (entityRigidBody.velocity.Equals(Vector2.zero)) 
-                entityRigidBody.velocity = new Vector2(-movementSpeedVelocity, 0);
+                entityRigidBody.velocity = new Vector2(-movementSpeedVelocity * Timescale, 0);
             animator.Play(run.name);
 
             yield return new WaitForSeconds(Time.deltaTime);
@@ -59,38 +61,30 @@ public class MudGuardian : EnemyBehavior
 
     private IEnumerator AttackCycle()
     {
+        entityRigidBody.velocity = Vector2.zero;
         if (attack1Counter % triggersAfterHowManyAttacks == 0 && attack1Counter != 0
                                                               && isSpecialAttackEnabled)
         {
             var targets = GetTargetsInRange(attack2Range, new Vector2(0, -.2f));
-            DealDamage(targets, attack2Damage);
-
             animator.Play(attack2.name);
+            yield return new WaitForSeconds(.4f * Timescale);
+            
+            DealDamage(targets, attack2Damage);
             attack1Counter = 0;
         }
         else
         {
-            var targets = GetTargetsInRange(attack2Range, new Vector2(0, -.2f));
-            DealDamage(targets, attack1Damage);
-            
+            var targets = GetTargetsInRange(attack1Range, new Vector2(0, -.2f));
             animator.Play(attack1.name);
+            yield return new WaitForSeconds(.35f * Timescale);
+            
+            DealDamage(targets, attack1Damage);
             attack1Counter++;
         }
-        entityRigidBody.velocity = Vector2.zero;
-        
-        yield return new WaitForSeconds(.75f);
+
+        yield return new WaitForSeconds(.5f * Timescale);
         yield break;
     }
 
-    private void DealDamage(RaycastHit2D[] targets, int damage)
-    {
-        foreach (var target in targets)
-        {
-            if (!target.collider.gameObject.TryGetComponent<SentinelHealth>(out SentinelHealth sentinelHealthScript))
-                continue;
-            
-            sentinelHealthScript.SetHealth(
-                sentinelHealthScript.GetHealth() - damage);
-        }
-    }
+    
 }

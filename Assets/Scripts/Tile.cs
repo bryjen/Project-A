@@ -57,7 +57,7 @@ public class Tile : MonoBehaviour
         if (sentinelPreview != null)
             Destroy(sentinelPreview);
 
-        var offset = gameData.selectedSentinel.GetComponent<SentinelBehavior>().GetPlacementOffset();
+        var offset = gameData.selectedSentinel.GetComponent<EntityBehavior>().PlacementOffset;
         var spawnPosition = (Vector2) transform.position + offset;
         
         StartNewCoroutine(ChangeColor(new Color(1, 1, 1, 0), .5f));
