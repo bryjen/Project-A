@@ -21,6 +21,9 @@ public class MaceGuy : EntityBehavior
     [SerializeField] private Animator animator;
     [SerializeField] private AnimationClip attack1, attack2, attack3, charge1, charge2, death, hit, run;
 
+    private IEnumerator standardBehaviorCoroutine;
+    private IEnumerator onTimescaleChangedCoroutine;
+
     private int comboCounter;
 
     private void Start()
@@ -32,14 +35,19 @@ public class MaceGuy : EntityBehavior
     {
         entityRigidBody.velocity = new Vector2(-movementSpeedVelocity, 0);
         comboCounter = 1;
-        
-        StartCoroutine(StandardBehavior());
+
+        standardBehaviorCoroutine = StandardBehavior();
+        onTimescaleChangedCoroutine = OnTimescaleChanged();
+        StartCoroutine(standardBehaviorCoroutine);
+        StartCoroutine(onTimescaleChangedCoroutine);
         yield break;
     }
 
     public override IEnumerator StopBehavior()
     {
-        throw new System.NotImplementedException();
+        StopCoroutine(standardBehaviorCoroutine);
+        StopCoroutine(onTimescaleChangedCoroutine);
+        yield break;
     }
 
     private IEnumerator StandardBehavior()
@@ -47,15 +55,41 @@ public class MaceGuy : EntityBehavior
         while (true)
         {
             animator.speed = Timescale;
-            
-            if (AreAnyTargetsInRange(attackRange, Vector2.zero))
+
+            bool areAnyTargetsInRange;
+            try
+            {
+                areAnyTargetsInRange = AreAnyTargetsInRange(attackRange, Vector2.zero);
+            }
+            catch { yield break; }
+
+            if (areAnyTargetsInRange)
+            {
                 yield return StartCoroutine(AttackCycle());
+                continue;
+            }
+                
 
             if (entityRigidBody.velocity.Equals(Vector2.zero)) 
                 entityRigidBody.velocity = new Vector2(-movementSpeedVelocity * Timescale, 0);
+            
             animator.Play(run.name);
 
             yield return new WaitForSeconds(Time.deltaTime);
+        }
+    }
+    
+    private IEnumerator OnTimescaleChanged()
+    {
+        var previousTimescale = Timescale;
+        
+        while (true)
+        {
+            if (previousTimescale != Timescale && !AreAnyTargetsInRange(attackRange, Vector2.zero))
+                entityRigidBody.velocity = new Vector2(-movementSpeedVelocity * Timescale, 0);
+
+            previousTimescale = Timescale;
+            yield return null;
         }
     }
 
@@ -68,18 +102,18 @@ public class MaceGuy : EntityBehavior
         {
             case 1:
                 DealDamage(GetTargetsInRange(attackRange, Vector2.zero), attack1Damage);
-                yield return new WaitForSeconds(cooldownAfterAttack1 * Timescale);
+                yield return new WaitForSeconds(cooldownAfterAttack1 * (1 / Timescale));
                 break;
             case 2:
                 DealDamage(GetTargetsInRange(attackRange, Vector2.zero), attack2Damage);
-                yield return new WaitForSeconds(cooldownAfterAttack2 * Timescale);
+                yield return new WaitForSeconds(cooldownAfterAttack2 * (1 / Timescale));
                 break;
             case 3:
                 DealDamage(GetTargetsInRange(attackRange, Vector2.zero), (int) (attack1Damage / 1.5));
-                yield return new WaitForSeconds((float) (cooldownAfterAttack3 / 3) * Timescale);
+                yield return new WaitForSeconds((float) (cooldownAfterAttack3 / 3) * (1 / Timescale));
                 
                 DealDamage(GetTargetsInRange(attackRange, Vector2.zero), (int) (attack2Damage / 1.5));
-                yield return new WaitForSeconds((float) (cooldownAfterAttack3 / 1.5) * Timescale);
+                yield return new WaitForSeconds((float) (cooldownAfterAttack3 / 1.5) * (1 / Timescale));
                 break;
             default:
                 yield break;

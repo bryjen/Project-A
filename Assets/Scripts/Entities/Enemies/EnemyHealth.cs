@@ -9,19 +9,29 @@ public class EnemyHealth : Health
         health = newHealth;
         if (health <= 0)
         {
-            if (entityBehaviorScript != null) 
-                Destroy(entityBehaviorScript);
-            
-            if (boxCollider != null) 
-                Destroy(boxCollider);
-            
-            if (rigidBody != null) 
-                Destroy(rigidBody);
-            
+            StartCoroutine(DestroyAllComponents());
             StartCoroutine(AnimationCoroutine());
         }
 
         StartCoroutine(PulseRed());
+    }
+
+    private IEnumerator DestroyAllComponents()
+    {
+        if (entityBehaviorScript != null)
+        {
+            yield return StartCoroutine(entityBehaviorScript.StopBehavior());
+            Destroy(entityBehaviorScript);
+        }
+            
+        
+        if (boxCollider != null) 
+            Destroy(boxCollider);
+            
+        if (rigidBody != null) 
+            Destroy(rigidBody);
+            
+        
     }
 
     private IEnumerator AnimationCoroutine()

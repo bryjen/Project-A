@@ -21,6 +21,9 @@ public class MudGuardian : EntityBehavior
     [Header("Animator Settings")] 
     [SerializeField] private Animator animator;
     [SerializeField] private AnimationClip attack1, attack2, death, hit, run;
+    
+    private IEnumerator standardBehaviorCoroutine;
+    private IEnumerator onTimescaleChangedCoroutine;
 
     private int attack1Counter;
 
@@ -33,13 +36,18 @@ public class MudGuardian : EntityBehavior
     {
         entityRigidBody.velocity = new Vector2(-movementSpeedVelocity, 0);
 
-        StartCoroutine(StandardBehavior());
+        standardBehaviorCoroutine = StandardBehavior();
+        onTimescaleChangedCoroutine = OnTimescaleChanged();
+        StartCoroutine(standardBehaviorCoroutine);
+        StartCoroutine(onTimescaleChangedCoroutine);
         yield break;
     }
 
     public override IEnumerator StopBehavior()
     {
-        throw new System.NotImplementedException();
+        StopCoroutine(standardBehaviorCoroutine);
+        StopCoroutine(onTimescaleChangedCoroutine);
+        yield break;
     }
 
     private IEnumerator StandardBehavior()
@@ -48,14 +56,40 @@ public class MudGuardian : EntityBehavior
         {
             animator.speed = Timescale;
             
-            if (AreAnyTargetsInRange(attack1Range, new Vector2(0, -.2f)))
+            bool areAnyTargetsInRange;
+            try
+            {
+                areAnyTargetsInRange = AreAnyTargetsInRange(attack1Range, new Vector2(0, -.2f));
+            }
+            catch { yield break; }
+
+            if (areAnyTargetsInRange)
+            {
                 yield return StartCoroutine(AttackCycle());
+                continue;
+            }
+                
             
             if (entityRigidBody.velocity.Equals(Vector2.zero)) 
                 entityRigidBody.velocity = new Vector2(-movementSpeedVelocity * Timescale, 0);
+            
             animator.Play(run.name);
 
             yield return new WaitForSeconds(Time.deltaTime);
+        }
+    }
+    
+    private IEnumerator OnTimescaleChanged()
+    {
+        var previousTimescale = Timescale;
+        
+        while (true)
+        {
+            if (previousTimescale != Timescale && !AreAnyTargetsInRange(attack1Range, new Vector2(0, -.2f)))
+                entityRigidBody.velocity = new Vector2(-movementSpeedVelocity * Timescale, 0);
+
+            previousTimescale = Timescale;
+            yield return null;
         }
     }
 
@@ -67,7 +101,7 @@ public class MudGuardian : EntityBehavior
         {
             var targets = GetTargetsInRange(attack2Range, new Vector2(0, -.2f));
             animator.Play(attack2.name);
-            yield return new WaitForSeconds(.4f * Timescale);
+            yield return new WaitForSeconds(.4f * (1 / Timescale));
             
             DealDamage(targets, attack2Damage);
             attack1Counter = 0;
@@ -76,13 +110,13 @@ public class MudGuardian : EntityBehavior
         {
             var targets = GetTargetsInRange(attack1Range, new Vector2(0, -.2f));
             animator.Play(attack1.name);
-            yield return new WaitForSeconds(.35f * Timescale);
+            yield return new WaitForSeconds(.35f * (1 / Timescale));
             
             DealDamage(targets, attack1Damage);
             attack1Counter++;
         }
 
-        yield return new WaitForSeconds(.5f * Timescale);
+        yield return new WaitForSeconds(.5f * (1 / Timescale));
         yield break;
     }
 

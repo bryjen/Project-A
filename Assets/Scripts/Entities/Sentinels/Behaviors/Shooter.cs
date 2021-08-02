@@ -35,7 +35,7 @@ public class Shooter : EntityBehavior
 
     private void Start()
     {    //todo remove this when done
-        //StartCoroutine(StartBehavior());
+        StartCoroutine(StartBehavior());
     }
     
 

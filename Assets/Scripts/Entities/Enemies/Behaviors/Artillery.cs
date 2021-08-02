@@ -16,6 +16,9 @@ public class Artillery : EntityBehavior
     [SerializeField] private Animator animator;
     [SerializeField] private AnimationClip attack, death, idle, hit, run;
     
+    private IEnumerator standardBehaviorCoroutine;
+    private IEnumerator onTimescaleChangedCoroutine;
+    
     private void Start()
     {    //todo get rid of this once prefabed // only for testing
         StartCoroutine(StartBehavior());
@@ -23,15 +26,20 @@ public class Artillery : EntityBehavior
     
     public override IEnumerator StartBehavior()
     {
-        entityRigidBody.velocity = new Vector2(-movementSpeedVelocity * Timescale, 0);
+        entityRigidBody.velocity = new Vector2(-movementSpeedVelocity * (1 / Timescale), 0);
 
-        StartCoroutine(StandardBehavior());
+        standardBehaviorCoroutine = StandardBehavior();
+        onTimescaleChangedCoroutine = OnTimescaleChanged();
+        StartCoroutine(standardBehaviorCoroutine);
+        StartCoroutine(onTimescaleChangedCoroutine);
         yield break;
     }
 
     public override IEnumerator StopBehavior()
     {
-        throw new System.NotImplementedException();
+        StopCoroutine(standardBehaviorCoroutine);
+        StopCoroutine(onTimescaleChangedCoroutine);
+        yield break;
     }
     
     private IEnumerator StandardBehavior()
@@ -39,13 +47,20 @@ public class Artillery : EntityBehavior
         while (true)
         {
             animator.speed = Timescale;
-            if (AreAnyTargetsInRange(detectionRange, rangeOffsetFromCenter))
+            
+            bool areAnyTargetsInRange;
+            try
+            {
+                areAnyTargetsInRange = AreAnyTargetsInRange(detectionRange, rangeOffsetFromCenter);
+            }
+            catch { yield break; }
+
+            if (areAnyTargetsInRange)
             {
                 yield return StartCoroutine(AttackCycle());
                 yield return new WaitForSeconds(Time.deltaTime);
                 continue;
             }
-                
             
             if (entityRigidBody.velocity.Equals(Vector2.zero)) 
                 entityRigidBody.velocity = new Vector2(-movementSpeedVelocity * Timescale, 0);
@@ -56,16 +71,30 @@ public class Artillery : EntityBehavior
         }
     }
 
+    private IEnumerator OnTimescaleChanged()
+    {
+        var previousTimescale = Timescale;
+        
+        while (true)
+        {
+            if (previousTimescale != Timescale && !AreAnyTargetsInRange(detectionRange, rangeOffsetFromCenter))
+                entityRigidBody.velocity = new Vector2(-movementSpeedVelocity * Timescale, 0);
+
+            previousTimescale = Timescale;
+            yield return null;
+        }
+    }
+
     private IEnumerator AttackCycle()
     {
         animator.Play(attack.name);
         entityRigidBody.velocity = Vector2.zero;
 
         var damageDelay = .65f;
-        yield return new WaitForSeconds(damageDelay * Timescale);
+        yield return new WaitForSeconds(damageDelay * (1 / Timescale));
         DealDamage(GetTargetsInRange(detectionRange, rangeOffsetFromCenter),
             attackDamage);
         
-        yield return new WaitForSeconds((attackCooldown - damageDelay) * Timescale);
+        yield return new WaitForSeconds((attackCooldown - damageDelay) * (1 / Timescale));
     }
 }
