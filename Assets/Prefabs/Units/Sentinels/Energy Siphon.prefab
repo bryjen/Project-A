@@ -89,6 +89,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entityBoxCollider: {fileID: 8746348724503350357}
   entityRigidBody: {fileID: 0}
+  Timescale: 1
   isRaycastsOn: 1
   layerMask:
     serializedVersion: 2
@@ -100,10 +101,10 @@ MonoBehaviour:
   spawnOffset: {x: 0, y: 1}
   xVelocityRangeInput: -3 3
   yVelocityRangeInput: 5 6
-  initialDelay: 1
-  cooldown: 1
+  initialDelay: 2
+  cooldown: 5
   energyUnitsProduced: 1
-  energyAmountPerUnit: 20
+  energyAmountPerUnit: 25
   animator: {fileID: 8746348725071452158}
   action: {fileID: 7400000, guid: 7ab9c1d547eadd34f9bd95de69daa077, type: 2}
   idle: {fileID: 7400000, guid: 3c9cb7fac1f53b64984122f56a4e5eea, type: 2}

@@ -37,7 +37,7 @@ public class EnemyHealth : Health
     private IEnumerator AnimationCoroutine()
     {
         animator.Play(animationClipName);
-        
+
         yield return new WaitForSeconds(
             animator.GetCurrentAnimatorStateInfo(0).length + overheadTimeBeforeDespawn);
 

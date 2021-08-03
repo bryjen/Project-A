@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
@@ -21,16 +22,19 @@ public class EnergySiphon : EntityBehavior
     private Range xVelocityRange, yVelocityRange;
     private bool isInitialized;
     
-    private void Start()
-    {    //todo remove this when done
+    private void Awake()
+    {
+        xVelocityRange = new Range(xVelocityRangeInput);
+        yVelocityRange = new Range(yVelocityRangeInput);
+        
+        var gameData = GameData.Instance;
+        gameData.ChangeEnergy(gameData.GetEnergy() - EnergyCost);
+        
         StartCoroutine(StartBehavior());
     }
     
     public override IEnumerator StartBehavior()
     {
-        if (!isInitialized) 
-            Initialize();
-        
         StartCoroutine(DefaultBehavior());
         yield break;
     }
@@ -40,7 +44,6 @@ public class EnergySiphon : EntityBehavior
         throw new System.NotImplementedException();
     }
     
-
     private IEnumerator DefaultBehavior()
     {
         yield return new WaitForSeconds(initialDelay);
@@ -56,14 +59,6 @@ public class EnergySiphon : EntityBehavior
         }
     }
 
-    private void Initialize()
-    {
-        xVelocityRange = new Range(xVelocityRangeInput);
-        yVelocityRange = new Range(yVelocityRangeInput);
-        
-        isInitialized = true;
-    }
-
     private void SpawnEnergy()
     {
         Vector2 currentPosition = transform.position;
@@ -77,5 +72,8 @@ public class EnergySiphon : EntityBehavior
         var overheadValue = new Range(0, 0.5f);
         spawnedPrefab.AddComponent<ScriptedBounce>()
             .Initialize(transform.position.y + overheadValue.GetRandomValue);
+
+        var energyBehavior = spawnedPrefab.GetComponent<EnergyBehavior>();
+        energyBehavior.Initialize(energyAmountPerUnit);
     }
 }

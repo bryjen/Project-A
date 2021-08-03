@@ -63,6 +63,8 @@ public class Tile : MonoBehaviour
         StartNewCoroutine(ChangeColor(new Color(1, 1, 1, 0), .5f));
         currentSentinel = (GameObject) Instantiate(gameData.selectedSentinel, spawnPosition, Quaternion.identity);
         currentSentinel.GetComponent<SortingGroup>().sortingOrder = GetOrderInSortingLayer();
+        
+        UISlotManager.DeselectAll();
     }
 
     private IEnumerator ChangeColor(Color color, float duration)

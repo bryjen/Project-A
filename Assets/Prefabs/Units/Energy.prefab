@@ -113,6 +113,7 @@ GameObject:
   - component: {fileID: 7135476173983753992}
   - component: {fileID: -4668998670404199688}
   - component: {fileID: -1115512706329189549}
+  - component: {fileID: 4909485385474803707}
   m_Layer: 0
   m_Name: Energy
   m_TagString: Untagged
@@ -172,3 +173,18 @@ SortingGroup:
   m_SortingLayerID: -538650615
   m_SortingLayer: 2
   m_SortingOrder: 2
+--- !u!114 &4909485385474803707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7135476173983753991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7cb1f0343ea44d4a9f8460c74436ea0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 7135476173528224941}
+  spriteRenderer: {fileID: 7135476173528224942}
+  lifespan: 7

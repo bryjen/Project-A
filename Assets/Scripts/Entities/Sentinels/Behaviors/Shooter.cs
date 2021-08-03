@@ -44,7 +44,7 @@ public class Shooter : EntityBehavior
         if (!isInitialized)
         {
             var gameData = GameData.Instance;
-            gameData.ChangeEnergy(gameData.GetEnergy() - (int) EnergyCost);
+            gameData.ChangeEnergy(gameData.GetEnergy() - EnergyCost);
             
             yield return StartCoroutine(Initialize());
         }

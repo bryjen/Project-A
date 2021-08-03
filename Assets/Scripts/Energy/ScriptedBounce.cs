@@ -16,7 +16,7 @@ public class ScriptedBounce : MonoBehaviour
         StartCoroutine(BounceCycle());
     }
 
-    private IEnumerator BounceCycle()
+    private IEnumerator BounceCycle() 
     {
         while (true)
         {

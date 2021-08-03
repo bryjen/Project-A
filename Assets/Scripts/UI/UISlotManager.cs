@@ -176,6 +176,24 @@ public class UISlotManager : MonoBehaviour, IPointerClickHandler, IPointerEnterH
 
     #endregion
 
+    public static void DeselectAll()
+    {
+        foreach (var slotManager in slotManagers)
+        {
+            if (slotManager.isSelected)
+                slotManager.StartDeselect();
+        }
+
+        var gameData = GameData.Instance;
+        gameData.selectedSentinel = null;
+        gameData.selectedSentinelPreview = null;
+    }
+
+    private void StartDeselect()
+    {
+        StartCoroutine(Deselect());
+    }
+
     /// <summary>Stops the current coroutine (if any) then runs another coroutine</summary>
     private void StartNewCoroutine(IEnumerator coroutine)
     {

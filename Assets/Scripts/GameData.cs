@@ -11,6 +11,7 @@ public class GameData : MonoBehaviour
     
     [HideInInspector] public GameObject selectedSentinel { get; set; }
     [HideInInspector] public GameObject selectedSentinelPreview { get; set; }
+    
     [SerializeField] private TextMeshProUGUI textMeshPro;
     
     private int energy;
@@ -24,7 +25,7 @@ public class GameData : MonoBehaviour
         }
 
         _instance = this;
-        energy = 125124809;
+        energy = 5000;
         textMeshPro.text = energy.ToString();
     }
 
