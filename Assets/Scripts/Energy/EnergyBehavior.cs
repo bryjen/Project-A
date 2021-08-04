@@ -15,6 +15,16 @@ public class EnergyBehavior : MonoBehaviour
     public void Initialize(int energyValue)
     {
         this.energyValue = energyValue;
+        
+        isCollectable = true;
+        StartCoroutine(DestroyOnTimeout());
+    }
+    
+    public void Initialize(int energyValue, float lifespan)
+    {
+        this.energyValue = energyValue;
+        this.lifespan = lifespan;
+        
         isCollectable = true;
         StartCoroutine(DestroyOnTimeout());
     }
@@ -33,7 +43,12 @@ public class EnergyBehavior : MonoBehaviour
         if (!isCollectable)
             return;
         isCollectable = false;
-        
+
+        if (TryGetComponent<MoveTowardsDestination>(out MoveTowardsDestination moveTowardsDestination))
+        {
+            moveTowardsDestination.StopMovementCoroutine();
+            Destroy(moveTowardsDestination);
+        }
         Destroy(GetComponent<ScriptedBounce>());
         Destroy(GetComponent<Rigidbody2D>());
 

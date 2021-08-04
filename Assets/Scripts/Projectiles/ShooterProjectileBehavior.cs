@@ -10,11 +10,15 @@ public class ShooterProjectileBehavior : MonoBehaviour
 
     private int damage;
     private Animator animator;
+    private bool isPiercing;
 
-    public void Instantiate(int damage, Animator animator)
+    private bool hasHit;
+
+    public void Instantiate(int damage, Animator animator, bool isPiercing)
     {
         this.damage = damage;
         this.animator = animator;
+        this.isPiercing = isPiercing;
     }
 
     private void Start()
@@ -24,14 +28,23 @@ public class ShooterProjectileBehavior : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (hasHit && !isPiercing)
+            return;
+        
         if (!other.gameObject.tag.Equals(requiredTag))
             return;
 
         if (!other.gameObject.TryGetComponent<EnemyHealth>(out EnemyHealth enemyHealthScript))
             return;
 
+        hasHit = true;
         Destroy(GetComponent<ProjectileVelocity>());
-        GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        
+        var rigidBody = GetComponent<Rigidbody2D>();
+        if (isPiercing)
+            rigidBody.velocity = rigidBody.velocity * .5f;
+        else
+            rigidBody.velocity = Vector2.zero;
         transform.localScale = new Vector3(2, 2, 1);
         
         enemyHealthScript.SetHealth(

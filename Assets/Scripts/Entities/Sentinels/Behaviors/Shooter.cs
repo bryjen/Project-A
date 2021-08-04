@@ -11,9 +11,9 @@ public class Shooter : EntityBehavior
     [SerializeField] private float velocity;
     [SerializeField] private Vector2 spawnOffset;
     [SerializeField] private int damage;
+    [SerializeField] private bool isPiercing;
     
     [Header("Behavior Settings")]
-    
     [SerializeField, Min(1f)] private float initialDelay;
     [SerializeField, Min(1)] private int projectilesPerShot;
     [SerializeField, Min(0)] private float cooldownBetweenProjectiles, cooldownBetweenShots;
@@ -96,6 +96,6 @@ public class Shooter : EntityBehavior
         shooterProjectile.GetComponent<ProjectileVelocity>().Initialize(velocity);
         
         var projectileBehavior = shooterProjectile.GetComponent<ShooterProjectileBehavior>();
-        projectileBehavior.Instantiate(damage, shooterProjectile.GetComponent<Animator>());
+        projectileBehavior.Instantiate(damage, shooterProjectile.GetComponent<Animator>(), isPiercing);
     }
 }

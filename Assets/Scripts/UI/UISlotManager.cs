@@ -134,12 +134,6 @@ public class UISlotManager : MonoBehaviour, IPointerClickHandler, IPointerEnterH
 
     private IEnumerator OnPointerClickCoroutine()
     {
-        while (currentCoroutine != null)
-            yield return null;
-
-        if (rectTransform.position.x != 50)
-            yield return StartCoroutine(MoveSlot());
-
         if (isSelected)
         {
             gameData.selectedSentinel = null;
@@ -157,6 +151,12 @@ public class UISlotManager : MonoBehaviour, IPointerClickHandler, IPointerEnterH
         isEnterExitDisabled = true;
         StartCoroutine(ColorChanger(selectedColor));
         isSelected = true;
+        
+        while (currentCoroutine != null)
+            yield return null;
+        
+        if (rectTransform.position.x != 50)
+            yield return StartCoroutine(MoveSlot());
     }
 
     private IEnumerator ColorChanger(Color newColor)
