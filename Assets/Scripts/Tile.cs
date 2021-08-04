@@ -64,7 +64,7 @@ public class Tile : MonoBehaviour
         currentSentinel = (GameObject) Instantiate(gameData.selectedSentinel, spawnPosition, Quaternion.identity);
         currentSentinel.GetComponent<SortingGroup>().sortingOrder = GetOrderInSortingLayer();
         
-        UISlotManager.DeselectAll();
+        //UISlotManager.DeselectAll();
     }
 
     private IEnumerator ChangeColor(Color color, float duration)
@@ -95,6 +95,6 @@ public class Tile : MonoBehaviour
     private int GetOrderInSortingLayer()
     {
         var row = Convert.ToInt32(gameObject.name.Substring(0, 1));
-        return row + 50;
+        return row * 10;
     }
 }

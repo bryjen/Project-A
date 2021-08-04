@@ -50,7 +50,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entityBoxCollider: {fileID: 881374955084340876}
   entityRigidBody: {fileID: 0}
-  isRaycastsOn: 0
+  Timescale: 1
+  isRaycastsOn: 1
   layerMask:
     serializedVersion: 2
     m_Bits: 256
@@ -61,12 +62,13 @@ MonoBehaviour:
   velocity: 7
   spawnOffset: {x: 0.5, y: 0.3}
   damage: 25
+  isPiercing: 1
   initialDelay: 2
   projectilesPerShot: 1
   cooldownBetweenProjectiles: 0.1
   cooldownBetweenShots: 2
-  HasChargeUpAbility: 0
-  ChargeUpTime: 0
+  HasChargeUpAbility: 1
+  ChargeUpTime: 2.5
   animator: {fileID: 4804066960185919788}
   idle1: {fileID: 7400000, guid: f21a79cc4cae3fd468d7e929e65d100c, type: 2}
   wakeUpAnimation: {fileID: 7400000, guid: 3e3866b3248650e47a45551d9e161bc1, type: 2}

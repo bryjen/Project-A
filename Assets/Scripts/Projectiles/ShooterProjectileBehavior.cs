@@ -7,18 +7,24 @@ public class ShooterProjectileBehavior : MonoBehaviour
 {
     [SerializeField] private float projectileLifespan;
     [SerializeField] private string requiredTag;
-
+    
     private int damage;
     private Animator animator;
     private bool isPiercing;
+    private Vector3 newLocalScale;
 
     private bool hasHit;
 
-    public void Instantiate(int damage, Animator animator, bool isPiercing)
+    public void Instantiate(int damage, Animator animator, bool isPiercing, Vector3? newLocalScale)
     {
         this.damage = damage;
         this.animator = animator;
         this.isPiercing = isPiercing;
+
+        if (newLocalScale is null)
+            this.newLocalScale = new Vector3(2, 2, 1);
+        else
+            this.newLocalScale = (Vector3) newLocalScale;
     }
 
     private void Start()

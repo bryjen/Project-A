@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Collections;
+using UnityEditor.Timeline.Actions;
 using UnityEngine;
 
 public class Shooter : EntityBehavior
@@ -31,6 +32,7 @@ public class Shooter : EntityBehavior
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Sprite idleSprite;
 
+    private float internalChargeUpAttackCounter;
     private bool isInitialized;
 
     private void Start()
@@ -71,15 +73,35 @@ public class Shooter : EntityBehavior
     
     private IEnumerator DefaultBehavior()
     {
+        internalChargeUpAttackCounter = 0;
+        
         while (true)
         {
-            //todo check if there is an enemy in the row, if not then wait for time.deltatime
+            if (internalChargeUpAttackCounter >= ChargeUpTime && HasChargeUpAbility) 
+                animator.Play(charge.name);
             
+            if (!AreAnyTargetsInRange(Vector2.Distance(transform.position, new Vector2(10.5f, transform.position.y)),
+                Vector2.zero))
+            {
+                internalChargeUpAttackCounter += Time.deltaTime;
+                yield return null;
+                continue;
+            }
+
             for (var i = 0; i < projectilesPerShot; i++)
             {
                 animator.Play(shootWithFx.name);
-                
-                SpawnProjectile();
+
+                if (internalChargeUpAttackCounter >= ChargeUpTime && HasChargeUpAbility)
+                {
+                    SpawnChargedProjectile();
+                    internalChargeUpAttackCounter = 0;
+                }
+                else
+                {
+                    SpawnProjectile();
+                }
+
                 if (i != projectilesPerShot - 1)
                     yield return new WaitForSeconds(cooldownBetweenProjectiles);
             }
@@ -96,6 +118,19 @@ public class Shooter : EntityBehavior
         shooterProjectile.GetComponent<ProjectileVelocity>().Initialize(velocity);
         
         var projectileBehavior = shooterProjectile.GetComponent<ShooterProjectileBehavior>();
-        projectileBehavior.Instantiate(damage, shooterProjectile.GetComponent<Animator>(), isPiercing);
+        projectileBehavior.Instantiate(damage, shooterProjectile.GetComponent<Animator>(), isPiercing, null);
+    }
+
+    private void SpawnChargedProjectile()
+    {
+        var spawnLocation = transform.position + new Vector3(spawnOffset.x, spawnOffset.y, 0);
+        var shooterProjectile = (GameObject) Instantiate(projectilePrefab, spawnLocation, Quaternion.identity);
+        
+        shooterProjectile.transform.localScale = new Vector3(1.5f, 1.5f, 1);
+        shooterProjectile.GetComponent<ProjectileVelocity>().Initialize(velocity * 1.25f);
+        
+        var projectileBehavior = shooterProjectile.GetComponent<ShooterProjectileBehavior>();
+        projectileBehavior.Instantiate(damage * 3, shooterProjectile.GetComponent<Animator>(), isPiercing,
+            new Vector3(3, 3, 1));
     }
 }
