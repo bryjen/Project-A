@@ -62,12 +62,12 @@ MonoBehaviour:
   velocity: 7
   spawnOffset: {x: 0.5, y: 0.3}
   damage: 25
-  isPiercing: 1
+  isPiercing: 0
   initialDelay: 2
   projectilesPerShot: 1
   cooldownBetweenProjectiles: 0.1
   cooldownBetweenShots: 2
-  HasChargeUpAbility: 1
+  HasChargeUpAbility: 0
   ChargeUpTime: 2.5
   animator: {fileID: 4804066960185919788}
   idle1: {fileID: 7400000, guid: f21a79cc4cae3fd468d7e929e65d100c, type: 2}

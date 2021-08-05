@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 public class DevEnemySpawner : MonoBehaviour
@@ -42,18 +43,24 @@ public class DevEnemySpawner : MonoBehaviour
         }
 
         if (row1Toggle.isOn)
-            Instantiate(enemyToBeSpawned, row1SpawnObject.transform.position, quaternion.identity);
-        
+            Instantiate(enemyToBeSpawned, row1SpawnObject.transform.position, quaternion.identity)
+                .GetComponent<SortingGroup>().sortingOrder = 10;
+
+
         if (row2Toggle.isOn)
-            Instantiate(enemyToBeSpawned, row2SpawnObject.transform.position, quaternion.identity);
-        
+            Instantiate(enemyToBeSpawned, row2SpawnObject.transform.position, quaternion.identity)
+                .GetComponent<SortingGroup>().sortingOrder = 20;
+
         if (row3Toggle.isOn)
-            Instantiate(enemyToBeSpawned, row3SpawnObject.transform.position, quaternion.identity);
-        
+            Instantiate(enemyToBeSpawned, row3SpawnObject.transform.position, quaternion.identity)
+                .GetComponent<SortingGroup>().sortingOrder = 30;
+
         if (row4Toggle.isOn)
-            Instantiate(enemyToBeSpawned, row4SpawnObject.transform.position, quaternion.identity);
-        
+            Instantiate(enemyToBeSpawned, row4SpawnObject.transform.position, quaternion.identity)
+                .GetComponent<SortingGroup>().sortingOrder = 40;
+
         if (row5Toggle.isOn)
-            Instantiate(enemyToBeSpawned, row5SpawnObject.transform.position, quaternion.identity);
+            Instantiate(enemyToBeSpawned, row5SpawnObject.transform.position, quaternion.identity)
+                .GetComponent<SortingGroup>().sortingOrder = 50;
     }
 }
