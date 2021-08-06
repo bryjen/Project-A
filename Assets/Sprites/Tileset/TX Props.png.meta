@@ -106,13 +106,13 @@ TextureImporter:
     second: TX Props_33
   - first:
       213: 912855357614513927
-    second: TX Props_34
+    second: rune6
   - first:
       213: -6568481390458680246
-    second: TX Props_35
+    second: rune4
   - first:
       213: 7388503698291035636
-    second: TX Props_36
+    second: rune7
   - first:
       213: -3526906408505785437
     second: TX Props_37
@@ -167,6 +167,9 @@ TextureImporter:
   - first:
       213: 1661347738091617250
     second: runes2
+  - first:
+      213: 2598466162016173086
+    second: rune5
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -982,7 +985,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TX Props_34
+      name: rune6
       rect:
         serializedVersion: 2
         x: 330
@@ -1003,7 +1006,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TX Props_35
+      name: rune4
       rect:
         serializedVersion: 2
         x: 330
@@ -1024,13 +1027,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TX Props_36
+      name: rune7
       rect:
         serializedVersion: 2
         x: 337
         y: 234
         width: 5
-        height: 12
+        height: 5
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1389,7 +1392,7 @@ TextureImporter:
         width: 5
         height: 12
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1410,7 +1413,7 @@ TextureImporter:
         width: 5
         height: 40
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1418,6 +1421,27 @@ TextureImporter:
       bones: []
       spriteID: 2eb795137fa4e0710800000000000000
       internalID: 1661347738091617250
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rune5
+      rect:
+        serializedVersion: 2
+        x: 337
+        y: 241
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e1cb8d3053b9f0420800000000000000
+      internalID: 2598466162016173086
       vertices: []
       indices: 
       edges: []

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8746348724503350354}
   - component: {fileID: -375465733299213627}
   - component: {fileID: -4010246654690982924}
+  - component: {fileID: -1020005016568607043}
   m_Layer: 7
   m_Name: Energy Siphon
   m_TagString: Untagged
@@ -141,6 +142,21 @@ MonoBehaviour:
   boxCollider: {fileID: 8746348724503350357}
   rigidBody: {fileID: 0}
   health: 100
+--- !u!114 &-1020005016568607043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8746348724503350359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd583c3c0a3b3124ebf69e4a9589d7db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  preview: {fileID: 2133173037598149052, guid: e277a3b3eb550ce49b6d03226282ba67, type: 3}
+  UISlot: {fileID: 7893229435178797553, guid: b2aa13f6607e20b4ba7fca825e9e5952, type: 3}
+  isUnlocked: 0
 --- !u!1 &8746348725071452144
 GameObject:
   m_ObjectHideFlags: 0

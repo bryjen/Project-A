@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MoveTowardsDestination : MonoBehaviour
 {
-    private AnimationCurve animationCurve = AnimationCurve.Linear(0.0f, 0.0f, 1.0f, 1.0f);
+    [SerializeField] private AnimationCurve animationCurve = AnimationCurve.Linear(0.0f, 0.0f, 1.0f, 1.0f);
     private Vector3 destination;
     private float duration = 1.0f;
 
@@ -20,19 +20,48 @@ public class MoveTowardsDestination : MonoBehaviour
         movementCoroutine = animationCurve is null ? StandardMovement() : EasingMovement();
         StartCoroutine(movementCoroutine);
     }
+    
+    public void Initialize(AnimationCurve animationCurve, RectTransform rectTransform, Vector3 destination, float duration)
+    {
+        if (animationCurve != null)
+            this.animationCurve = animationCurve;
+        this.destination = destination;
+        this.duration = duration;
+
+        movementCoroutine = EasingMovementRectTransform(rectTransform);
+        StartCoroutine(movementCoroutine);
+    }
 
     public void StopMovementCoroutine() => StopCoroutine(movementCoroutine);
 
     private IEnumerator EasingMovement()
     {
         var t = 0f;
-        
+
         do
         {
             t += Time.deltaTime;
             var s = t / duration;
 
             this.transform.position = Vector3.Lerp(this.transform.position, destination, animationCurve.Evaluate(s));
+            
+            if (t > duration)
+                break;
+
+            yield return null;
+        } while (true);
+    }
+    
+    private IEnumerator EasingMovementRectTransform(RectTransform rectTransform)
+    {
+        var t = 0f;
+
+        do
+        {
+            t += Time.deltaTime;
+            var s = t / duration;
+
+            rectTransform.position = Vector3.Lerp(rectTransform.position, destination, animationCurve.Evaluate(s));
             
             if (t > duration)
                 break;

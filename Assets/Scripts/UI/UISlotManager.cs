@@ -16,21 +16,35 @@ public class UISlotManager : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     [Header("Associated Sentinel Settings")]
     [SerializeField] private GameObject sentinelPrefab;
     [SerializeField] private GameObject sentinelPreviewPrefab;
-
+    
     private static readonly HashSet<UISlotManager> slotManagers = new HashSet<UISlotManager>();
     private static readonly Color defaultColor = new Color(0.53f, 0.53f, 0.47f);
     private static readonly Color selectedColor = new Color(0.69f, 0.69f, 0.44f);
-    
+
+    private UISlotManagerData uiSlotManagerData;
     private IEnumerator currentCoroutine;
     private GameData gameData;
     private bool isEnterExitDisabled;
     private bool isSelected;
 
-    private void Start()
+    private void Awake()
     {
         gameData = GameData.Instance;
         slotManagers.Add(gameObject.GetComponent<UISlotManager>());
+        
+        uiSlotManagerData = new UISlotManagerData(rectTransform, easeInCurve, easeOutCurve, sentinelPrefab, sentinelPreviewPrefab);
     }
+
+    public void Initialize(UISlotManagerData uiSlotManagerData)
+    {
+        rectTransform = uiSlotManagerData.rectTransform;
+        easeInCurve = uiSlotManagerData.easeInCurve;
+        easeOutCurve = uiSlotManagerData.easeOutCurve;
+        sentinelPrefab = uiSlotManagerData.sentinelPrefab;
+        sentinelPreviewPrefab = uiSlotManagerData.sentinelPreviewPrefab;
+    }
+
+    public UISlotManagerData GetUISlotManagerData() => uiSlotManagerData;
 
     public IEnumerator Deselect()
     {
@@ -202,5 +216,26 @@ public class UISlotManager : MonoBehaviour, IPointerClickHandler, IPointerEnterH
         
         currentCoroutine = coroutine;
         StartCoroutine(currentCoroutine);
+    }
+}
+
+public class UISlotManagerData
+{
+    public RectTransform rectTransform { get; set; }
+
+    public AnimationCurve easeInCurve { get; set; }
+    public AnimationCurve easeOutCurve { get; set; }
+    
+    public GameObject sentinelPrefab { get; set; }
+    public GameObject sentinelPreviewPrefab { get; set; }
+
+    public UISlotManagerData(RectTransform rectTransform, AnimationCurve easeInCurve, AnimationCurve easeOutCurve, GameObject sentinelPrefab,
+        GameObject sentinelPreviewPrefab)
+    {
+        this.rectTransform = rectTransform;
+        this.easeInCurve = easeInCurve;
+        this.easeOutCurve = easeOutCurve;
+        this.sentinelPrefab = sentinelPrefab;
+        this.sentinelPreviewPrefab = sentinelPreviewPrefab;
     }
 }

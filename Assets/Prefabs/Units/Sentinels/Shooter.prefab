@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4804066959579224959}
   - component: {fileID: 881374955084340876}
   - component: {fileID: 6470344557539070998}
+  - component: {fileID: 2552506832121510411}
   m_Layer: 7
   m_Name: Shooter
   m_TagString: Untagged
@@ -148,6 +149,21 @@ SortingGroup:
   m_SortingLayerID: -538650615
   m_SortingLayer: 2
   m_SortingOrder: 1
+--- !u!114 &2552506832121510411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4804066959579224958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd583c3c0a3b3124ebf69e4a9589d7db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  preview: {fileID: 6180824637118942358, guid: d9216025978507b40a39d530cf55d432, type: 3}
+  UISlot: {fileID: 7506452752817374789, guid: 474cf51ba60abbd4c806d4ed4d3d23e6, type: 3}
+  isUnlocked: 1
 --- !u!1 &4804066960185919784
 GameObject:
   m_ObjectHideFlags: 0

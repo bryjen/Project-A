@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 8252370312472321737}
   - component: {fileID: 8252370312472321738}
   - component: {fileID: 4747744746716008415}
+  - component: {fileID: 1350800268422339582}
   m_Layer: 0
   m_Name: Encoder
   m_TagString: Untagged
@@ -200,6 +201,21 @@ SortingGroup:
   m_SortingLayerID: -538650615
   m_SortingLayer: 2
   m_SortingOrder: 1
+--- !u!114 &1350800268422339582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8252370312472321780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd583c3c0a3b3124ebf69e4a9589d7db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  preview: {fileID: 7400150547487708290, guid: 8508dec4865bf934ba6b934af8a80251, type: 3}
+  UISlot: {fileID: 2850103701228067485, guid: 310ede19c367019438dc8f358a31aceb, type: 3}
+  isUnlocked: 1
 --- !u!1 &8252370313794145139
 GameObject:
   m_ObjectHideFlags: 0

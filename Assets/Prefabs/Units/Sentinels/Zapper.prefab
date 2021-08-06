@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 6821638522946272776}
   - component: {fileID: 6821638522946272777}
   - component: {fileID: -9094695961737339322}
+  - component: {fileID: -8007645882816552443}
   m_Layer: 7
   m_Name: Zapper
   m_TagString: Untagged
@@ -131,6 +132,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entityBoxCollider: {fileID: 6821638522946272773}
   entityRigidBody: {fileID: 0}
+  Timescale: 1
   isRaycastsOn: 1
   layerMask:
     serializedVersion: 2
@@ -161,6 +163,21 @@ SortingGroup:
   m_SortingLayerID: -538650615
   m_SortingLayer: 2
   m_SortingOrder: 1
+--- !u!114 &-8007645882816552443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6821638522946272779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd583c3c0a3b3124ebf69e4a9589d7db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  preview: {fileID: 6336700378303837783, guid: 1848da3fa157bad40878eaeb43209573, type: 3}
+  UISlot: {fileID: 6841549813129762835, guid: 6c0b878713ebfd64791d7dc50b6c6510, type: 3}
+  isUnlocked: 1
 --- !u!1 &6821638524570852787
 GameObject:
   m_ObjectHideFlags: 0
