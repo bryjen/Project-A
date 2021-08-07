@@ -13,8 +13,8 @@ public class PreGameUISlotManager : MonoBehaviour, IPointerClickHandler, IPointe
     [SerializeField] private AnimationCurve easingCurve = AnimationCurve.Linear(0.0f, 0.0f, 1.0f, 1.0f);
     
     private static readonly Color defaultColor = new Color(0.53f, 0.53f, 0.47f);
-
-    private List<GameObject> occupiableSpaces;
+    
+    private List<GameObject> slotInstances;
     private Image imageComponent;
     private Vector3 unselectedPosition;
     private IEnumerator currentCoroutine;
@@ -29,8 +29,8 @@ public class PreGameUISlotManager : MonoBehaviour, IPointerClickHandler, IPointe
         isClickable = true;
         
         gameData = GameData.Instance;
-
-        occupiableSpaces = PreGameController.Instance.GetOccupiableSpaces();
+        
+        slotInstances = PreGameController.Instance.GetSlotInstances();
         newParent = GameObject.Find("Slots");
         imageComponent = this.gameObject.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>();
     }
@@ -40,34 +40,37 @@ public class PreGameUISlotManager : MonoBehaviour, IPointerClickHandler, IPointe
         if (!isClickable)
             return;
         isClickable = false;
-
-        var slotCopy = (GameObject) Instantiate(this.gameObject, rectTransform.position, Quaternion.identity);
-        slotCopy.transform.SetParent(newParent.transform);
-        var slotCopyRectTransform = slotCopy.GetComponent<RectTransform>();
         
-        if (slotCopy.TryGetComponent<PreGameUISlotManager>(out PreGameUISlotManager preGameUiSlotManager))
-            Destroy(preGameUiSlotManager);
+        var slotCopy = (GameObject) Instantiate(this.gameObject, rectTransform.position, Quaternion.identity);
+        
+        //Initialize and/or destroy other components
+        var slotCopyRectTransform = slotCopy.GetComponent<RectTransform>();
         
         var preGameSelectedUISlot = slotCopy.AddComponent<PreGameSelectedUISlot>();
         preGameSelectedUISlot.Initialize(rectTransform.position, this);
+
+        Destroy(slotCopy.GetComponent<PreGameUISlotManager>());
+
+        //Set a new parent for the prefab
+        slotCopy.transform.SetParent(newParent.transform);
 
         //Set the anchor + pivot to center left
         slotCopyRectTransform.anchorMin = new Vector2(0, 0.5f);
         slotCopyRectTransform.anchorMax = new Vector2(0, 0.5f);
         slotCopyRectTransform.pivot = new Vector2(0, 0.5f);
         
-        currentCoroutine = MoveSlot(preGameSelectedUISlot, slotCopyRectTransform, new Vector3(0, 336 - (occupiableSpaces.Count * 130) + 540, 0));
-        occupiableSpaces.Add(this.gameObject);
-        
+        //Start moving the prefab + darken the color
+        currentCoroutine = MoveSlot(preGameSelectedUISlot, slotCopyRectTransform, new Vector3(0, 336 - (slotInstances.Count * 130) + 540, 0));
         StartCoroutine(currentCoroutine);
         StartCoroutine(FadeTo(imageComponent, new Color(0.5f, 0.5f, 0.5f, 1)));
         StartCoroutine(FadeTo(GetComponent<Image>(), new Color(0.415f, 0.415f, 0.3f, 1)));
+        
+        slotInstances.Add(slotCopy);
     }
 
     public void Deselect()
     {
         isClickable = true;
-        occupiableSpaces.Remove(this.gameObject);
 
         StartCoroutine(FadeTo(imageComponent, Color.white));
         StartCoroutine(FadeTo(GetComponent<Image>(), defaultColor));
@@ -104,7 +107,7 @@ public class PreGameUISlotManager : MonoBehaviour, IPointerClickHandler, IPointe
         preGameSelectedUiSlot.MakeClickable();
     }
     
-    protected IEnumerator FadeTo(Image image, Color newColor)
+    private IEnumerator FadeTo(Image image, Color newColor)
     {
         var t = 0f;
         var duration = .15f;

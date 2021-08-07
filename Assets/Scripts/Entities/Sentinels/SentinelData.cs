@@ -17,13 +17,4 @@ public class SentinelData : MonoBehaviour
     public GameObject GetUISlot() => UISlot;
 
     public bool IsUnlocked() => isUnlocked;
-    
-    private void Awake()
-    {
-        if (UISlot.TryGetComponent<UISlotManager>(out UISlotManager uiSlotManager))
-        {
-            uiSlotManagerData = uiSlotManager.GetUISlotManagerData();
-            Destroy(uiSlotManager);
-        }
-    }
 }

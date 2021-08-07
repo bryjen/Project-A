@@ -29,9 +29,9 @@ public class SelectionPanelFormatter : MonoBehaviour
             slotPrefabRectTransform.anchorMin = new Vector2(0.5f, 0.5f);
             slotPrefabRectTransform.anchorMax = new Vector2(0.5f, 0.5f);
             slotPrefabRectTransform.pivot = new Vector2(0.5f, 0.5f);
-            
-            //Set the correct scrpit
-            Destroy(slotPrefab.GetComponent<UISlotManager>());
+
+            //Disable the unrequired scripts
+            slotPrefab.GetComponent<UISlotManager>().enabled = false;
 
             slotPrefab.transform.SetParent(selectionPanel.transform, false);
         }

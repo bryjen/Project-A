@@ -10,7 +10,8 @@ public class PreGameSelectedUISlot : MonoBehaviour, IPointerClickHandler, IPoint
 
     private Image blackPanelImage;
     private Image image;
-    
+
+    private List<GameObject> slotInstances;
     private PreGameUISlotManager preGameUiSlotManager;
     private bool isClickable;
 
@@ -21,6 +22,7 @@ public class PreGameSelectedUISlot : MonoBehaviour, IPointerClickHandler, IPoint
         this.initialCoordinates = initialCoordinates;
         this.preGameUiSlotManager = preGameUiSlotManager;
 
+        slotInstances = PreGameController.Instance.GetSlotInstances();
         blackPanelImage = this.gameObject.transform.GetChild(0).GetChild(0).GetComponent<Image>();
         image = blackPanelImage.transform.GetChild(0).GetComponent<Image>();
     }
@@ -31,7 +33,10 @@ public class PreGameSelectedUISlot : MonoBehaviour, IPointerClickHandler, IPoint
             return;
         
         preGameUiSlotManager.Deselect();
-        
+        slotInstances.Remove(this.gameObject);
+
+        AdjustSlotInstances();
+
         StartCoroutine(MoveSlot(GetComponent<RectTransform>(), initialCoordinates));
         StartCoroutine(FadeTo(GetComponent<Image>(), new Color(1, 1, 1, 0)));
         StartCoroutine(FadeTo(blackPanelImage, new Color(1, 1, 1, 0)));
@@ -44,6 +49,18 @@ public class PreGameSelectedUISlot : MonoBehaviour, IPointerClickHandler, IPoint
 
     public void OnPointerExit(PointerEventData eventData)
     {
+    }
+
+    /// <summary> Adjusts the positions of each slot when a slot has been deselected </summary>
+    private void AdjustSlotInstances()
+    {
+        for (int i = 0; i < slotInstances.Count; i++)
+        {
+            if (slotInstances[i] == this.gameObject)
+                continue;
+
+            slotInstances[i].GetComponent<RectTransform>().position = new Vector3(0, 336 - (i * 130) + 540);
+        }
     }
     
     private IEnumerator MoveSlot(RectTransform rectTransform, Vector3 destination)
@@ -69,7 +86,7 @@ public class PreGameSelectedUISlot : MonoBehaviour, IPointerClickHandler, IPoint
         }
     }
     
-    protected IEnumerator FadeTo(Image image, Color newColor)
+    private IEnumerator FadeTo(Image image, Color newColor)
     {
         var t = 0f;
         var duration = .5f;
