@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Collections;
-using UnityEditor.Timeline.Actions;
 using UnityEngine;
 
 public class Shooter : EntityBehavior

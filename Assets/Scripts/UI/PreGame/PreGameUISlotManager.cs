@@ -62,8 +62,8 @@ public class PreGameUISlotManager : MonoBehaviour, IPointerClickHandler, IPointe
         //Start moving the prefab + darken the color
         currentCoroutine = MoveSlot(preGameSelectedUISlot, slotCopyRectTransform, new Vector3(0, 336 - (slotInstances.Count * 130) + 540, 0));
         StartCoroutine(currentCoroutine);
-        StartCoroutine(FadeTo(imageComponent, new Color(0.5f, 0.5f, 0.5f, 1)));
-        StartCoroutine(FadeTo(GetComponent<Image>(), new Color(0.415f, 0.415f, 0.3f, 1)));
+        
+        ChangeColors(slotCopy);
         
         slotInstances.Add(slotCopy);
     }
@@ -72,8 +72,8 @@ public class PreGameUISlotManager : MonoBehaviour, IPointerClickHandler, IPointe
     {
         isClickable = true;
 
-        StartCoroutine(FadeTo(imageComponent, Color.white));
-        StartCoroutine(FadeTo(GetComponent<Image>(), defaultColor));
+        StartCoroutine(FadeTo(imageComponent, Color.white, .15f));
+        StartCoroutine(FadeTo(GetComponent<Image>(), defaultColor, .15f));
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -82,6 +82,26 @@ public class PreGameUISlotManager : MonoBehaviour, IPointerClickHandler, IPointe
 
     public void OnPointerExit(PointerEventData eventData)
     {
+    }
+
+    private void ChangeColors(GameObject slotCopy)
+    {
+        var blackPanel = slotCopy.transform.GetChild(0).GetChild(0);
+        var blackPanelImage = blackPanel.GetComponent<Image>();
+        var imageImage = blackPanel.GetChild(0).GetComponent<Image>();
+        
+        slotCopy.GetComponent<Image>().color = new Color(defaultColor.r, defaultColor.g, defaultColor.b, 0);
+        blackPanelImage.color = new Color(0, 0, 0, 0);
+        imageImage.color = new Color(1, 1, 1, 0);
+
+        //The slotCopy fades back to regular opacity
+        StartCoroutine(FadeTo(slotCopy.GetComponent<Image>(), defaultColor, 1.5f));
+        StartCoroutine(FadeTo(blackPanelImage, new Color(0, 0, 0, .5f), 1.5f));
+        StartCoroutine(FadeTo(imageImage, Color.white, 1.5f));
+        
+        //This gameObject fades to a darker tone
+        StartCoroutine(FadeTo(imageComponent, new Color(0.5f, 0.5f, 0.5f, 1), .15f));
+        StartCoroutine(FadeTo(GetComponent<Image>(), new Color(0.415f, 0.415f, 0.3f, 1), .15f));
     }
     
     private IEnumerator MoveSlot(PreGameSelectedUISlot preGameSelectedUiSlot, RectTransform rectTransform, Vector3 destination)
@@ -107,14 +127,21 @@ public class PreGameUISlotManager : MonoBehaviour, IPointerClickHandler, IPointe
         preGameSelectedUiSlot.MakeClickable();
     }
     
-    private IEnumerator FadeTo(Image image, Color newColor)
+    private IEnumerator FadeTo(Image image, Color newColor, float duration)
     {
         var t = 0f;
-        var duration = .15f;
 
         while (t < 1)
         {
-            image.color = Color.Lerp(image.color, newColor, t);
+            try
+            {
+                image.color = Color.Lerp(image.color, newColor, t);
+            }
+            catch
+            {
+                image.color = new Color(1, 1, 1, 0);
+            }
+            
 
             t += Time.deltaTime / duration;
             yield return null;
