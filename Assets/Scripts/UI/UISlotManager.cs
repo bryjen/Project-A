@@ -20,8 +20,8 @@ public class UISlotManager : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     private static readonly HashSet<UISlotManager> slotManagers = new HashSet<UISlotManager>();
     private static readonly Color defaultColor = new Color(0.53f, 0.53f, 0.47f);
     private static readonly Color selectedColor = new Color(0.69f, 0.69f, 0.44f);
-
-    private UISlotManagerData uiSlotManagerData;
+    private static bool isDisabled;
+    
     private IEnumerator currentCoroutine;
     private GameData gameData;
     private bool isEnterExitDisabled;
@@ -31,20 +31,35 @@ public class UISlotManager : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     {
         gameData = GameData.Instance;
         slotManagers.Add(gameObject.GetComponent<UISlotManager>());
-        
-        uiSlotManagerData = new UISlotManagerData(rectTransform, easeInCurve, easeOutCurve, sentinelPrefab, sentinelPreviewPrefab);
     }
 
-    public void Initialize(UISlotManagerData uiSlotManagerData)
+    public static void DisableAllSlots()
     {
-        rectTransform = uiSlotManagerData.rectTransform;
-        easeInCurve = uiSlotManagerData.easeInCurve;
-        easeOutCurve = uiSlotManagerData.easeOutCurve;
-        sentinelPrefab = uiSlotManagerData.sentinelPrefab;
-        sentinelPreviewPrefab = uiSlotManagerData.sentinelPreviewPrefab;
+        isDisabled = true;
+
+        foreach (var uiSlotManager in slotManagers)
+        {
+            uiSlotManager.ChangeColor(new Color(0.3113208f, 0.3113208f, 0.2596298f, 1));
+            uiSlotManager.ChangeColor(uiSlotManager.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>(), 
+                new Color(.5f, .5f, .5f, 1));
+        }
     }
 
-    public UISlotManagerData GetUISlotManagerData() => uiSlotManagerData;
+    public static void EnableAllSlots()
+    {
+        isDisabled = false;
+
+        foreach (var uiSlotManager in slotManagers)
+        {
+            uiSlotManager.ChangeColor(defaultColor);
+            uiSlotManager.ChangeColor(uiSlotManager.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>(), 
+               Color.white);
+        }
+    }
+
+    public static void ClearSlotManagers() => slotManagers.Clear();
+
+    public void AddToSlotManagers() => slotManagers.Add(this);
 
     public IEnumerator Deselect()
     {
@@ -52,7 +67,7 @@ public class UISlotManager : MonoBehaviour, IPointerClickHandler, IPointerEnterH
             yield return null;
 
         isEnterExitDisabled = false;
-        StartCoroutine(ColorChanger(defaultColor));
+        StartCoroutine(ColorChanger(GetComponent<Image>(), defaultColor));
         StartCoroutine(ReturnSlot());
         isSelected = false;
             
@@ -63,7 +78,7 @@ public class UISlotManager : MonoBehaviour, IPointerClickHandler, IPointerEnterH
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (isEnterExitDisabled) return;
+        if (isEnterExitDisabled || isDisabled) return;
         
         StartNewCoroutine(MoveSlot());
     }
@@ -99,7 +114,7 @@ public class UISlotManager : MonoBehaviour, IPointerClickHandler, IPointerEnterH
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (isEnterExitDisabled) return;
+        if (isEnterExitDisabled || isDisabled) return;
         
         StartNewCoroutine(ReturnSlot());
     }
@@ -135,6 +150,9 @@ public class UISlotManager : MonoBehaviour, IPointerClickHandler, IPointerEnterH
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        if (isDisabled)
+            return;
+        
         foreach (var slotManager in slotManagers)
         {
             if (slotManager == this) continue;
@@ -154,7 +172,7 @@ public class UISlotManager : MonoBehaviour, IPointerClickHandler, IPointerEnterH
             gameData.selectedSentinelPreview = null;
             
             isEnterExitDisabled = false;
-            StartCoroutine(ColorChanger(defaultColor));
+            StartCoroutine(ColorChanger(GetComponent<Image>(), defaultColor));
             isSelected = false;
             
             yield break;
@@ -163,7 +181,7 @@ public class UISlotManager : MonoBehaviour, IPointerClickHandler, IPointerEnterH
         gameData.selectedSentinelPreview = sentinelPreviewPrefab;
         
         isEnterExitDisabled = true;
-        StartCoroutine(ColorChanger(selectedColor));
+        StartCoroutine(ColorChanger(GetComponent<Image>(), selectedColor));
         isSelected = true;
         
         while (currentCoroutine != null)
@@ -173,9 +191,8 @@ public class UISlotManager : MonoBehaviour, IPointerClickHandler, IPointerEnterH
             yield return StartCoroutine(MoveSlot());
     }
 
-    private IEnumerator ColorChanger(Color newColor)
+    private IEnumerator ColorChanger(Image image, Color newColor)
     {
-        var image = GetComponent<Image>();
         var t = 0f;
         var duration = .15f;
 
@@ -187,6 +204,9 @@ public class UISlotManager : MonoBehaviour, IPointerClickHandler, IPointerEnterH
             yield return null;
         }
     }
+
+    private void ChangeColor(Color newColor) => StartCoroutine(ColorChanger(GetComponent<Image>(), newColor));
+    private void ChangeColor(Image image, Color newColor) => StartCoroutine(ColorChanger(image, newColor));
 
     #endregion
 
@@ -216,26 +236,5 @@ public class UISlotManager : MonoBehaviour, IPointerClickHandler, IPointerEnterH
         
         currentCoroutine = coroutine;
         StartCoroutine(currentCoroutine);
-    }
-}
-
-public class UISlotManagerData
-{
-    public RectTransform rectTransform { get; set; }
-
-    public AnimationCurve easeInCurve { get; set; }
-    public AnimationCurve easeOutCurve { get; set; }
-    
-    public GameObject sentinelPrefab { get; set; }
-    public GameObject sentinelPreviewPrefab { get; set; }
-
-    public UISlotManagerData(RectTransform rectTransform, AnimationCurve easeInCurve, AnimationCurve easeOutCurve, GameObject sentinelPrefab,
-        GameObject sentinelPreviewPrefab)
-    {
-        this.rectTransform = rectTransform;
-        this.easeInCurve = easeInCurve;
-        this.easeOutCurve = easeOutCurve;
-        this.sentinelPrefab = sentinelPrefab;
-        this.sentinelPreviewPrefab = sentinelPreviewPrefab;
     }
 }

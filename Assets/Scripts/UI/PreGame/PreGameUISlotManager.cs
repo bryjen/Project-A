@@ -23,6 +23,8 @@ public class PreGameUISlotManager : MonoBehaviour, IPointerClickHandler, IPointe
     private bool isClickable;
     private bool isSelected;
 
+    private bool stopColorChange;
+
     private void Awake()
     {
         unselectedPosition = rectTransform.position;
@@ -34,6 +36,8 @@ public class PreGameUISlotManager : MonoBehaviour, IPointerClickHandler, IPointe
         newParent = GameObject.Find("Slots");
         imageComponent = this.gameObject.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>();
     }
+
+    public void StopColorChange() => stopColorChange = true;
 
     public void OnPointerClick(PointerEventData eventData)
     {
@@ -142,6 +146,9 @@ public class PreGameUISlotManager : MonoBehaviour, IPointerClickHandler, IPointe
                 image.color = new Color(1, 1, 1, 0);
             }
             
+            if (stopColorChange) 
+                yield break;
+
 
             t += Time.deltaTime / duration;
             yield return null;

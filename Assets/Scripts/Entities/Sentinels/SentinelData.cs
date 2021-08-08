@@ -10,8 +10,6 @@ public class SentinelData : MonoBehaviour
     [SerializeField] private GameObject UISlot;
     [SerializeField] private bool isUnlocked;
 
-    private UISlotManagerData uiSlotManagerData;
-
     public GameObject GetPreview() => preview;
 
     public GameObject GetUISlot() => UISlot;

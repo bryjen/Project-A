@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6180824637118942362}
   - component: {fileID: 5667360286028563454}
   m_Layer: 7
-  m_Name: ShooterPreview
+  m_Name: Shooter Preview
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -42,7 +42,7 @@ SortingGroup:
   m_Enabled: 1
   m_SortingLayerID: -538650615
   m_SortingLayer: 2
-  m_SortingOrder: 2
+  m_SortingOrder: 60
 --- !u!1 &6180824637741375168
 GameObject:
   m_ObjectHideFlags: 0

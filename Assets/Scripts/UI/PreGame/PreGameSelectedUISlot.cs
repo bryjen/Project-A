@@ -17,6 +17,8 @@ public class PreGameSelectedUISlot : MonoBehaviour, IPointerClickHandler, IPoint
 
     public void MakeClickable() => isClickable = true;
 
+    public PreGameUISlotManager GetPreGameUiSlotManager() => preGameUiSlotManager;
+
     public void Initialize(Vector3 initialCoordinates, PreGameUISlotManager preGameUiSlotManager)
     {
         this.initialCoordinates = initialCoordinates;

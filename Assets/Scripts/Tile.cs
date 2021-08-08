@@ -29,6 +29,7 @@ public class Tile : MonoBehaviour
             return;
         sentinelPreview =
             (GameObject) Instantiate(gameData.selectedSentinelPreview, transform.position, Quaternion.identity);
+        sentinelPreview.GetComponent<SortingGroup>().sortingOrder = GetOrderInSortingLayer();
     }
 
     private void OnMouseExit()
