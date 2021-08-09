@@ -21,16 +21,20 @@ public class UISlotManager : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     private static readonly Color defaultColor = new Color(0.53f, 0.53f, 0.47f);
     private static readonly Color selectedColor = new Color(0.69f, 0.69f, 0.44f);
     private static bool isDisabled;
-    
+
+    private RemoveButton removeButton;
     private IEnumerator currentCoroutine;
     private GameData gameData;
     private bool isEnterExitDisabled;
     private bool isSelected;
 
-    private void Awake()
+    private void Start()
     {
         gameData = GameData.Instance;
         slotManagers.Add(gameObject.GetComponent<UISlotManager>());
+
+        removeButton = GameObject.Find("RemoveButton")
+            .GetComponent<RemoveButton>();
     }
 
     public static void DisableAllSlots()
@@ -160,6 +164,9 @@ public class UISlotManager : MonoBehaviour, IPointerClickHandler, IPointerEnterH
             if (slotManager.isSelected)
                 StartCoroutine(slotManager.Deselect());
         }
+        
+        if (gameData.isRemovalMode)
+            removeButton.Deselect();
         
         StartCoroutine(OnPointerClickCoroutine());
     }

@@ -12,6 +12,7 @@ public class PreGameSelectedUISlot : MonoBehaviour, IPointerClickHandler, IPoint
     private Image image;
 
     private List<GameObject> slotInstances;
+    private List<IEnumerator> currentCoroutines;
     private PreGameUISlotManager preGameUiSlotManager;
     private bool isClickable;
 
@@ -24,6 +25,7 @@ public class PreGameSelectedUISlot : MonoBehaviour, IPointerClickHandler, IPoint
         this.initialCoordinates = initialCoordinates;
         this.preGameUiSlotManager = preGameUiSlotManager;
 
+        currentCoroutines = new List<IEnumerator>();
         slotInstances = PreGameController.Instance.GetSlotInstances();
         blackPanelImage = this.gameObject.transform.GetChild(0).GetChild(0).GetComponent<Image>();
         image = blackPanelImage.transform.GetChild(0).GetComponent<Image>();
@@ -40,17 +42,31 @@ public class PreGameSelectedUISlot : MonoBehaviour, IPointerClickHandler, IPoint
         AdjustSlotInstances();
 
         StartCoroutine(MoveSlot(GetComponent<RectTransform>(), initialCoordinates));
-        StartCoroutine(FadeTo(GetComponent<Image>(), new Color(1, 1, 1, 0)));
-        StartCoroutine(FadeTo(blackPanelImage, new Color(1, 1, 1, 0)));
-        StartCoroutine(FadeTo(image, new Color(1, 1, 1, 0)));
+        StartCoroutine(FadeTo(GetComponent<Image>(), new Color(.5f, .5f, .5f, 0), .25f, true));
+        StartCoroutine(FadeTo(blackPanelImage, new Color(.5f, .5f, .5f, 0), .25f, true));
+        StartCoroutine(FadeTo(image, new Color(1, 1, 1, 0), .25f, true));
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        if (currentCoroutines.Count > 0)
+            currentCoroutines.ForEach(coroutine => StopCoroutine(coroutine));
+        
+        currentCoroutines.Add(FadeTo(GetComponent<Image>(), new Color(0.37f, 0.37f, 0.38f, 1), .25f, false));
+        currentCoroutines.Add(FadeTo(image, new Color(0.5f, 0.5f, 0.5f, 1), .25f, false));
+        
+        currentCoroutines.ForEach(coroutine => StartCoroutine(coroutine));
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        if (currentCoroutines.Count > 0)
+            currentCoroutines.ForEach(coroutine => StopCoroutine(coroutine));
+
+        currentCoroutines.Add(FadeTo(GetComponent<Image>(), new Color(0.5254902f, 0.5254902f, 0.4745098f, 1), .25f, false));
+        currentCoroutines.Add(FadeTo(image, new Color(1, 1, 1, 1), .25f, false));
+        
+        currentCoroutines.ForEach(coroutine => StartCoroutine(coroutine));
     }
 
     /// <summary> Adjusts the positions of each slot when a slot has been deselected </summary>
@@ -88,10 +104,9 @@ public class PreGameSelectedUISlot : MonoBehaviour, IPointerClickHandler, IPoint
         }
     }
     
-    private IEnumerator FadeTo(Image image, Color newColor)
+    private IEnumerator FadeTo(Image image, Color newColor, float duration, bool destroyObject)
     {
         var t = 0f;
-        var duration = .5f;
 
         while (t < 1)
         {
@@ -101,6 +116,7 @@ public class PreGameSelectedUISlot : MonoBehaviour, IPointerClickHandler, IPoint
             yield return null;
         }
         
-        Destroy(this.gameObject);
+        if (destroyObject)
+            Destroy(this.gameObject);
     }
 }

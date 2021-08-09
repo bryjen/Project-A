@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -17,7 +18,7 @@ public class PreGameUISlotManager : MonoBehaviour, IPointerClickHandler, IPointe
     private List<GameObject> slotInstances;
     private Image imageComponent;
     private Vector3 unselectedPosition;
-    private IEnumerator currentCoroutine;
+    private List<IEnumerator> currentCoroutines;
     private GameData gameData;
     private GameObject newParent;
     private bool isClickable;
@@ -30,8 +31,8 @@ public class PreGameUISlotManager : MonoBehaviour, IPointerClickHandler, IPointe
         unselectedPosition = rectTransform.position;
         isClickable = true;
         
+        currentCoroutines = new List<IEnumerator>();
         gameData = GameData.Instance;
-        
         slotInstances = PreGameController.Instance.GetSlotInstances();
         newParent = GameObject.Find("Slots");
         imageComponent = this.gameObject.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>();
@@ -44,6 +45,7 @@ public class PreGameUISlotManager : MonoBehaviour, IPointerClickHandler, IPointe
         if (!isClickable)
             return;
         isClickable = false;
+        isSelected = true;
         
         var slotCopy = (GameObject) Instantiate(this.gameObject, rectTransform.position, Quaternion.identity);
         
@@ -64,8 +66,7 @@ public class PreGameUISlotManager : MonoBehaviour, IPointerClickHandler, IPointe
         slotCopyRectTransform.pivot = new Vector2(0, 0.5f);
         
         //Start moving the prefab + darken the color
-        currentCoroutine = MoveSlot(preGameSelectedUISlot, slotCopyRectTransform, new Vector3(0, 336 - (slotInstances.Count * 130) + 540, 0));
-        StartCoroutine(currentCoroutine);
+        StartCoroutine(MoveSlot(preGameSelectedUISlot, slotCopyRectTransform, new Vector3(0, 336 - (slotInstances.Count * 130) + 540, 0)));
         
         ChangeColors(slotCopy);
         
@@ -75,6 +76,7 @@ public class PreGameUISlotManager : MonoBehaviour, IPointerClickHandler, IPointe
     public void Deselect()
     {
         isClickable = true;
+        isSelected = false;
 
         StartCoroutine(FadeTo(imageComponent, Color.white, .15f));
         StartCoroutine(FadeTo(GetComponent<Image>(), defaultColor, .15f));
@@ -82,10 +84,30 @@ public class PreGameUISlotManager : MonoBehaviour, IPointerClickHandler, IPointe
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        if(isSelected)
+            return;
+        
+        if (currentCoroutines.Count > 0)
+            currentCoroutines.ForEach(coroutine => StopCoroutine(coroutine));
+        
+        currentCoroutines.Add(FadeTo(GetComponent<Image>(), new Color(0.415f, 0.415f, 0.3f, 1), .25f));
+        currentCoroutines.Add(FadeTo(imageComponent, new Color(0.5f, 0.5f, 0.5f, 1), .25f));
+        
+        currentCoroutines.ForEach(coroutine => StartCoroutine(coroutine));
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        if(isSelected)
+            return;
+        
+        if (currentCoroutines.Count > 0)
+            currentCoroutines.ForEach(coroutine => StopCoroutine(coroutine));
+
+        currentCoroutines.Add(FadeTo(GetComponent<Image>(), defaultColor, .25f));
+        currentCoroutines.Add(FadeTo(imageComponent, Color.white, .25f));
+        
+        currentCoroutines.ForEach(coroutine => StartCoroutine(coroutine));
     }
 
     private void ChangeColors(GameObject slotCopy)
@@ -104,8 +126,8 @@ public class PreGameUISlotManager : MonoBehaviour, IPointerClickHandler, IPointe
         StartCoroutine(FadeTo(imageImage, Color.white, 1.5f));
         
         //This gameObject fades to a darker tone
-        StartCoroutine(FadeTo(imageComponent, new Color(0.5f, 0.5f, 0.5f, 1), .15f));
         StartCoroutine(FadeTo(GetComponent<Image>(), new Color(0.415f, 0.415f, 0.3f, 1), .15f));
+        StartCoroutine(FadeTo(imageComponent, new Color(0.5f, 0.5f, 0.5f, 1), .15f));
     }
     
     private IEnumerator MoveSlot(PreGameSelectedUISlot preGameSelectedUiSlot, RectTransform rectTransform, Vector3 destination)
@@ -143,13 +165,12 @@ public class PreGameUISlotManager : MonoBehaviour, IPointerClickHandler, IPointe
             }
             catch
             {
-                image.color = new Color(1, 1, 1, 0);
+                yield break;
             }
             
             if (stopColorChange) 
                 yield break;
-
-
+            
             t += Time.deltaTime / duration;
             yield return null;
         }

@@ -61,9 +61,10 @@ public class EnergySiphon : EntityBehavior
 
     private void SpawnEnergy()
     {
-        Vector2 currentPosition = transform.position;
+        Vector3 currentPosition = transform.position;
+        currentPosition.z = -1;
         var spawnedPrefab =
-            (GameObject) Instantiate(energyPrefab, currentPosition + spawnOffset, quaternion.identity);
+            (GameObject) Instantiate(energyPrefab, currentPosition + (Vector3) spawnOffset, quaternion.identity);
         
         var rigidBody2D = spawnedPrefab.AddComponent<Rigidbody2D>();
         rigidBody2D.velocity = new Vector2(xVelocityRange.GetRandomValue, yVelocityRange.GetRandomValue);

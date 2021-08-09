@@ -67,6 +67,8 @@ public class PreGameController : MonoBehaviour
         }
 
         Destroy(this.gameObject);
+        Destroy(slotSelectionPanel);
+        Destroy(continueButton);
     }
 
     private IEnumerator FirstCameraMovement()

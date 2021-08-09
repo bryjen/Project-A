@@ -20,6 +20,12 @@ public class Tile : MonoBehaviour
 
     private void OnMouseEnter()
     {
+        if (gameData.isRemovalMode)
+        {
+            StartNewCoroutine(ChangeColor(new Color(0.43f, 0f, 0.03f, 0.25f), .5f));
+            return;
+        }
+        
         if (currentSentinel != null)
             return;
         
@@ -34,10 +40,10 @@ public class Tile : MonoBehaviour
 
     private void OnMouseExit()
     {
-        if (currentSentinel != null)
-            return;
-        
-        StartNewCoroutine(ChangeColor(new Color(1, 1, 1, 0), .5f));
+        if (gameData.isRemovalMode)
+            StartNewCoroutine(ChangeColor(new Color(0.43f, 0f, 0.03f, 0f), .5f));
+        else
+            StartNewCoroutine(ChangeColor(new Color(1, 1, 1, 0), .5f));
         
         if (sentinelPreview is null) 
             return;
@@ -46,6 +52,9 @@ public class Tile : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (gameData.isRemovalMode && IsRemovable())
+            Remove();
+        
         if (gameData.selectedSentinel is null)
             return;
 
@@ -66,6 +75,14 @@ public class Tile : MonoBehaviour
         currentSentinel.GetComponent<SortingGroup>().sortingOrder = GetOrderInSortingLayer();
         
         //UISlotManager.DeselectAll();
+    }
+
+    private bool IsRemovable()
+        => currentSentinel != null;
+
+    private void Remove()
+    {
+        Destroy(currentSentinel);
     }
 
     private IEnumerator ChangeColor(Color color, float duration)

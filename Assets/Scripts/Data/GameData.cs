@@ -9,6 +9,7 @@ public class GameData : MonoBehaviour
     private static GameData _instance;
     public static GameData Instance { get { return _instance;  } }
     
+    [HideInInspector] public bool isRemovalMode { get; set; }
     [HideInInspector] public GameObject selectedSentinel { get; set; }
     [HideInInspector] public GameObject selectedSentinelPreview { get; set; }
     
