@@ -82,7 +82,8 @@ public class Tile : MonoBehaviour
 
     private void Remove()
     {
-        Destroy(currentSentinel);
+        Destroy(currentSentinel.gameObject);
+        currentSentinel = null;
     }
 
     private IEnumerator ChangeColor(Color color, float duration)
