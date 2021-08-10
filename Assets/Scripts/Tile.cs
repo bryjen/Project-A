@@ -55,6 +55,9 @@ public class Tile : MonoBehaviour
         if (gameData.isRemovalMode && IsRemovable())
             Remove();
         
+        if (currentSentinel != null) 
+            return;
+        
         if (gameData.selectedSentinel is null)
             return;
 

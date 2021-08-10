@@ -42,6 +42,10 @@ public class PreGameSkipper : MonoBehaviour
             slotCopyRectTransform.anchorMax = new Vector2(0, 0.5f);
             slotCopyRectTransform.pivot = new Vector2(0, 0.5f);
         }
+        
+        //Start the EnemySpawner
+        var enemySpawner = GameObject.Find("EnemySpawner");
+        enemySpawner.GetComponent<WaveManager>().StartNextWave();
     }
 
 #endif

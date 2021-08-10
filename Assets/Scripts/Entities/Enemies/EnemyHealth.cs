@@ -4,17 +4,24 @@ using UnityEngine;
 
 public class EnemyHealth : Health
 {
+    private List<GameObject> enemies;
+    
     public override void SetHealth(int newHealth)
     {
         health = newHealth;
         if (health <= 0)
         {
+            Debug.Log(enemies.Contains(this.gameObject));
+            enemies.Remove(gameObject);
+            
             StartCoroutine(DestroyAllComponents());
             StartCoroutine(AnimationCoroutine());
         }
-
+        
         StartCoroutine(PulseRed());
     }
+
+    public void SetEnemiesList(List<GameObject> enemies) => this.enemies = enemies;
 
     private IEnumerator DestroyAllComponents()
     {
@@ -30,8 +37,6 @@ public class EnemyHealth : Health
             
         if (rigidBody != null) 
             Destroy(rigidBody);
-            
-        
     }
 
     private IEnumerator AnimationCoroutine()

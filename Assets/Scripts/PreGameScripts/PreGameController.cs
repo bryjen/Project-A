@@ -10,6 +10,9 @@ public class PreGameController : MonoBehaviour
     [SerializeField] private GameObject continueButton;
     [SerializeField] private GameObject countdownText;
     [SerializeField] private GameObject infoPanel;
+
+    [Header("Wave Manager")] 
+    [SerializeField] private WaveManager waveManager;
     
     private static PreGameController _instance;
     public static PreGameController Instance { get { return _instance;  } }
@@ -69,6 +72,8 @@ public class PreGameController : MonoBehaviour
         Destroy(this.gameObject);
         Destroy(slotSelectionPanel);
         Destroy(continueButton);
+        
+        waveManager.StartNextWave();
     }
 
     private IEnumerator FirstCameraMovement()
