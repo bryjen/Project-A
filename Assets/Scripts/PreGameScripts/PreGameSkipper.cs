@@ -7,6 +7,7 @@ public class PreGameSkipper : MonoBehaviour
 {
     [SerializeField] private bool _enabled;
     [SerializeField] private GameObject[] sentinels;
+    [SerializeField] private List<GameObject> stuffToBeEnabled;
 
     [Header("UI Options")] 
     [SerializeField]
@@ -46,6 +47,8 @@ public class PreGameSkipper : MonoBehaviour
         //Start the EnemySpawner
         var enemySpawner = GameObject.Find("EnemySpawner");
         enemySpawner.GetComponent<WaveManager>().StartNextWave();
+        
+        stuffToBeEnabled.ForEach(o => o.SetActive(true));
     }
 
 #endif

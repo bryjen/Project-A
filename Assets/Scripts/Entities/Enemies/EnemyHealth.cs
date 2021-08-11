@@ -11,8 +11,8 @@ public class EnemyHealth : Health
         health = newHealth;
         if (health <= 0)
         {
-            Debug.Log(enemies.Contains(this.gameObject));
-            enemies.Remove(gameObject);
+            if (enemies != null) 
+                enemies.Remove(gameObject);
             
             StartCoroutine(DestroyAllComponents());
             StartCoroutine(AnimationCoroutine());
@@ -30,7 +30,6 @@ public class EnemyHealth : Health
             yield return StartCoroutine(entityBehaviorScript.StopBehavior());
             Destroy(entityBehaviorScript);
         }
-            
         
         if (boxCollider != null) 
             Destroy(boxCollider);

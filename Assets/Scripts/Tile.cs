@@ -36,6 +36,8 @@ public class Tile : MonoBehaviour
         sentinelPreview =
             (GameObject) Instantiate(gameData.selectedSentinelPreview, transform.position, Quaternion.identity);
         sentinelPreview.GetComponent<SortingGroup>().sortingOrder = GetOrderInSortingLayer();
+        sentinelPreview.transform.SetParent(SpawnRuntimeObjects.Instance.previewSentinelParent.transform);
+
     }
 
     private void OnMouseExit()
@@ -77,6 +79,8 @@ public class Tile : MonoBehaviour
         currentSentinel = (GameObject) Instantiate(gameData.selectedSentinel, spawnPosition, Quaternion.identity);
         currentSentinel.GetComponent<SortingGroup>().sortingOrder = GetOrderInSortingLayer();
         
+        currentSentinel.transform.SetParent(SpawnRuntimeObjects.Instance.spawnedSentinelParent.transform);
+
         //UISlotManager.DeselectAll();
     }
 

@@ -35,7 +35,7 @@ public abstract class Health : MonoBehaviour
 
         while (t < 1)
         {
-            spriteRenderer.color = Color.Lerp(spriteRenderer.color, defaultColor, t);
+            spriteRenderer.color = Color.Lerp(spriteRenderer.color, new Color(1, 1, 1, 0), t);
 
             t += Time.deltaTime / duration;
             yield return null;

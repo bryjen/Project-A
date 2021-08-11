@@ -118,6 +118,8 @@ public class Shooter : EntityBehavior
         
         var projectileBehavior = shooterProjectile.GetComponent<ShooterProjectileBehavior>();
         projectileBehavior.Instantiate(damage, shooterProjectile.GetComponent<Animator>(), isPiercing, null);
+        
+        shooterProjectile.transform.SetParent(SpawnRuntimeObjects.Instance.spawnedProjectilesParent.transform);
     }
 
     private void SpawnChargedProjectile()

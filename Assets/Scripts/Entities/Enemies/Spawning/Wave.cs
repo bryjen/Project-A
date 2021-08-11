@@ -6,11 +6,25 @@ using UnityEngine;
 
 public class Wave : MonoBehaviour
 {
-    [SerializeField] private List<Group> groups;
-    
     private WaveManager waveManager;
+    public List<Group> groups { get; private set; }
 
-    private void Awake() => waveManager = transform.parent.GetComponent<WaveManager>();
+    void Awake()
+    {
+        groups = new List<Group>();
+        
+        foreach (Transform child in transform)
+        {
+            if (!child.gameObject.TryGetComponent<Group>(out Group _group))
+                throw new Exception($"The gameobject {child.name} does not contain a Group script!");
+            
+            groups.Add(_group);
+        }
+        
+        waveManager = transform.parent.GetComponent<WaveManager>();
+    }
+
+    
 
     public void StartNextGroup()
     {
@@ -43,7 +57,7 @@ public class Wave : MonoBehaviour
         animator.Play("Exit");
         yield return new WaitForSeconds(1f);
 
-        if (waveManager.GetWaves().Count == 0)
+        if (waveManager.waves.Count == 0)
         {
             waveText.GetComponent<TextMeshProUGUI>()
                 .text = "Final Wave!";

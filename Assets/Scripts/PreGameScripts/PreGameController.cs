@@ -9,7 +9,7 @@ public class PreGameController : MonoBehaviour
     [SerializeField] private GameObject slotSelectionPanel;
     [SerializeField] private GameObject continueButton;
     [SerializeField] private GameObject countdownText;
-    [SerializeField] private GameObject infoPanel;
+    [SerializeField] private List<GameObject> uiObjectsToEnable;
 
     [Header("Wave Manager")] 
     [SerializeField] private WaveManager waveManager;
@@ -62,18 +62,20 @@ public class PreGameController : MonoBehaviour
         
         yield return StartCoroutine(StartCountdown());
         
-        infoPanel.SetActive(true);
+        uiObjectsToEnable.ForEach(o => o.SetActive(true));
         UISlotManager.EnableAllSlots();
         foreach (var slot in slotInstances)
         {
             slot.GetComponent<UISlotManager>().enabled = true;
         }
+        
+        yield return new WaitForSeconds(2f);
+        
+        waveManager.StartNextWave();
 
         Destroy(this.gameObject);
         Destroy(slotSelectionPanel);
         Destroy(continueButton);
-        
-        waveManager.StartNextWave();
     }
 
     private IEnumerator FirstCameraMovement()

@@ -1,13 +1,26 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class WaveManager : MonoBehaviour
 {
-    [SerializeField] private List<Wave> waves;
     [SerializeField] private GameObject waveText;
+    
+    public List<Wave> waves { get; private set; }
 
-    public List<Wave> GetWaves() => waves;
+    void Awake()
+    {
+        waves = new List<Wave>();
+
+        foreach (Transform child in transform)
+        {
+            if (!child.gameObject.TryGetComponent<Wave>(out Wave wave))
+                throw new Exception($"The gameobject {child.name} does not contain a Wave script!");
+            
+            waves.Add(wave);
+        }
+    }
 
     public GameObject GetWaveText() => waveText;
     
@@ -18,6 +31,11 @@ public class WaveManager : MonoBehaviour
 
         waves[0].StartNextGroup();
         waves.RemoveAt(0);
+    }
+
+    public void Completed()
+    {
+        Debug.Log("here");
     }
 }
 

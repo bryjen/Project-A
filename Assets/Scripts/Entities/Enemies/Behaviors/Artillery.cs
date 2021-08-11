@@ -64,9 +64,7 @@ public class Artillery : EntityBehavior
             
             if (entityRigidBody.velocity.Equals(Vector2.zero)) 
                 entityRigidBody.velocity = new Vector2(-movementSpeedVelocity * Timescale, 0);
-            
-            animator.Play(run.name); 
-            
+
             yield return new WaitForSeconds(Time.deltaTime);
         }
     }
@@ -92,9 +90,18 @@ public class Artillery : EntityBehavior
 
         var damageDelay = .65f;
         yield return new WaitForSeconds(damageDelay * (1 / Timescale));
-        DealDamage(GetTargetsInRange(detectionRange, rangeOffsetFromCenter),
-            attackDamage);
+        try
+        {
+            DealDamage(GetTargetsInRange(detectionRange, rangeOffsetFromCenter),
+                attackDamage);
+        }
+        catch
+        {
+            yield break;
+        }
         
         yield return new WaitForSeconds((attackCooldown - damageDelay) * (1 / Timescale));
+        
+        animator.Play(run.name); 
     }
 }

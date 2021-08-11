@@ -45,8 +45,12 @@ public class MudGuardian : EntityBehavior
 
     public override IEnumerator StopBehavior()
     {
-        StopCoroutine(standardBehaviorCoroutine);
-        StopCoroutine(onTimescaleChangedCoroutine);
+        if (standardBehaviorCoroutine != null)
+            StopCoroutine(standardBehaviorCoroutine);
+        
+        if (onTimescaleChangedCoroutine != null) 
+            StopCoroutine(onTimescaleChangedCoroutine);
+        
         yield break;
     }
 
@@ -68,12 +72,9 @@ public class MudGuardian : EntityBehavior
                 yield return StartCoroutine(AttackCycle());
                 continue;
             }
-                
             
             if (entityRigidBody.velocity.Equals(Vector2.zero)) 
                 entityRigidBody.velocity = new Vector2(-movementSpeedVelocity * Timescale, 0);
-            
-            animator.Play(run.name);
 
             yield return new WaitForSeconds(Time.deltaTime);
         }
@@ -117,6 +118,8 @@ public class MudGuardian : EntityBehavior
         }
 
         yield return new WaitForSeconds(.5f * (1 / Timescale));
+        
+        animator.Play(run.name);
         yield break;
     }
 
