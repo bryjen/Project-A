@@ -31,7 +31,7 @@ public abstract class Health : MonoBehaviour
     protected IEnumerator FadeAway()
     {
         var t = 0f;
-        var duration = .15f;
+        var duration = .5f;
 
         while (t < 1)
         {

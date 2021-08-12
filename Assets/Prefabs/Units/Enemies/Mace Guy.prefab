@@ -99,7 +99,7 @@ MonoBehaviour:
   cooldownAfterAttack1: 0.75
   attack2Damage: 35
   cooldownAfterAttack2: 0.75
-  attack3Damage: 55
+  attack3Damage: 60
   cooldownAfterAttack3: 1.2
   animator: {fileID: 324680001627964697}
   attack1: {fileID: 7400000, guid: 3f1c41391e40f004a822d5b4522df3c3, type: 2}

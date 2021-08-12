@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2c08356dbde47a44a3a02dcba5a4c7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  overheadTimeBeforeDespawn: 0
+  overheadTimeBeforeDespawn: 1
   spriteRenderer: {fileID: 6821638524570852784}
   animator: {fileID: 6821638524570852785}
   animationClipName: Death
@@ -142,8 +142,8 @@ MonoBehaviour:
   PlacementOffset: {x: 0, y: 0}
   initialDelay: 1
   attackCooldown: 0.8
-  attackDetectionRange: 1
-  damage: 0
+  attackDetectionRange: 1.5
+  damage: 35
   rayOffset: {x: 0, y: 0}
   animator: {fileID: 6821638524570852785}
   wakeUp: {fileID: 7400000, guid: ae1686c12427c0a4288cf73c5cb0fcb5, type: 2}

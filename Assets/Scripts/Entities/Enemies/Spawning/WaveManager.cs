@@ -32,11 +32,6 @@ public class WaveManager : MonoBehaviour
         waves[0].StartNextGroup();
         waves.RemoveAt(0);
     }
-
-    public void Completed()
-    {
-        Debug.Log("here");
-    }
 }
 
 public class SpawnLocations

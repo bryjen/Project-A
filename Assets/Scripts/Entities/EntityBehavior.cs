@@ -55,11 +55,17 @@ public abstract class EntityBehavior : MonoBehaviour
         {
             foreach (var target in targets)
             {
-                if (!target.collider.gameObject.TryGetComponent<SentinelHealth>(out SentinelHealth sentinelHealthScript))
+                if (target.collider.gameObject.TryGetComponent<SentinelHealth>(out SentinelHealth sentinelHealthScript))
+                {
+                    sentinelHealthScript.SetHealth(sentinelHealthScript.GetHealth() - damage);
                     continue;
-            
-                sentinelHealthScript.SetHealth(
-                    sentinelHealthScript.GetHealth() - damage);
+                }
+                
+                if (target.collider.gameObject.TryGetComponent<EnemyHealth>(out EnemyHealth enemyHealthScript))
+                {
+                    enemyHealthScript.SetHealth(enemyHealthScript.GetHealth() - damage);
+                    continue;
+                }
             }
         } catch {}
     }

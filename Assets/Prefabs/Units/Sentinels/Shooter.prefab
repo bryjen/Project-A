@@ -104,7 +104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2c08356dbde47a44a3a02dcba5a4c7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  overheadTimeBeforeDespawn: 0
+  overheadTimeBeforeDespawn: 0.5
   spriteRenderer: {fileID: 4804066960185919791}
   animator: {fileID: 4804066960185919788}
   animationClipName: Death

@@ -6,7 +6,8 @@ public class Zapper : EntityBehavior
 {
     [Header("Attack Settings")] 
     [SerializeField, Min(1f)] private float initialDelay, attackCooldown;
-    [SerializeField] private float attackDetectionRange, damage;
+    [SerializeField] private float attackDetectionRange;
+    [SerializeField] private int damage;
     [SerializeField] private Vector2 rayOffset;
 
     [Header("Animator Settings")] 
@@ -52,19 +53,26 @@ public class Zapper : EntityBehavior
     {
         while (true)
         {
-            //todo check if there is an enemy in the row, if not then wait for time.deltatime
-
             if (AreAnyTargetsInRange(attackDetectionRange, rayOffset))
             {
-                animator.Play(attack.name);
-                
-                //do something to detect all enemies in the range
-                
-                yield return new WaitForSeconds(attackCooldown);
+                yield return StartCoroutine(AttackCycle());
                 continue;
             }
             
             yield return new WaitForSeconds(Time.deltaTime);
         }
+    }
+
+    private IEnumerator AttackCycle()
+    {
+        animator.Play(attack.name);
+
+        var cooldownBeforeAttack = .25f;
+        yield return new WaitForSeconds(cooldownBeforeAttack);
+        
+        DealDamage(GetTargetsInRange(attackDetectionRange, rayOffset), damage);
+        //Debug.Log(GetTargetsInRange(attackDetectionRange, rayOffset).Length);
+                
+        yield return new WaitForSeconds(attackCooldown - cooldownBeforeAttack);
     }
 }

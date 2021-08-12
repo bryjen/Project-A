@@ -14,7 +14,6 @@ public class MaceGuy : EntityBehavior
     [SerializeField] private float cooldownAfterAttack1;
     [SerializeField] private int attack2Damage;
     [SerializeField] private float cooldownAfterAttack2;
-    [SerializeField] private int attack3Damage;
     [SerializeField] private float cooldownAfterAttack3;
 
     [Header("Animator Settings")] 
@@ -85,8 +84,17 @@ public class MaceGuy : EntityBehavior
         
         while (true)
         {
-            if (previousTimescale != Timescale && !AreAnyTargetsInRange(attackRange, Vector2.zero))
-                entityRigidBody.velocity = new Vector2(-movementSpeedVelocity * Timescale, 0);
+            try
+            {
+                if (previousTimescale != Timescale && !AreAnyTargetsInRange(attackRange, Vector2.zero))
+                    entityRigidBody.velocity = new Vector2(-movementSpeedVelocity * Timescale, 0);
+            }
+            catch
+            {
+                StopAllCoroutines();
+                yield break;
+            }
+            
 
             previousTimescale = Timescale;
             yield return null;
@@ -109,10 +117,10 @@ public class MaceGuy : EntityBehavior
                 yield return new WaitForSeconds(cooldownAfterAttack2 * (1 / Timescale));
                 break;
             case 3:
-                DealDamage(GetTargetsInRange(attackRange, Vector2.zero), (int) (attack1Damage / 1.5));
+                DealDamage(GetTargetsInRange(attackRange, Vector2.zero), (int) (attack1Damage / 1.25));
                 yield return new WaitForSeconds((float) (cooldownAfterAttack3 / 3) * (1 / Timescale));
                 
-                DealDamage(GetTargetsInRange(attackRange, Vector2.zero), (int) (attack2Damage / 1.5));
+                DealDamage(GetTargetsInRange(attackRange, Vector2.zero), (int) (attack2Damage / 1.25));
                 yield return new WaitForSeconds((float) (cooldownAfterAttack3 / 1.5) * (1 / Timescale));
                 break;
             default:

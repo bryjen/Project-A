@@ -79,23 +79,27 @@ public class Group : MonoBehaviour
         do
         {
             timeElapsed += Time.deltaTime;
-            
+
+            if (spawnedEnemies.Count == 0 && waveManager.waves.Count == 0 && wave.groups.Count == 0)
+            {
+
+                GameObject.Find("PostGameManager").GetComponent<OnWavesCompleted>().OnCompleted();
+                yield break;
+            }
+
             if (timeElapsed >= waitDuration || spawnedEnemies.Count == 0)
                 break;
 
             yield return null;
         } while (true);
 
-        if (waveManager.waves.Count == 0 && wave.groups.Count == 0)
-        {
-            waveManager.Completed();
-            yield break;
-        }
-        
         wave.StartNextGroup();
     }
 
-    private Vector3 GetSpawnLocation(int row)
+    //private void Update() => 
+        //Debug.Log($"{SpawnRuntimeObjects.Instance.spawnedEnemyParent.transform.childCount}, , {waveManager.waves.Count}, {wave.groups.Count}");
+
+        private Vector3 GetSpawnLocation(int row)
     {
         switch (row)
         {

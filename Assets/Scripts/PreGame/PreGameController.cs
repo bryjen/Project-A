@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering;
+using Random = UnityEngine.Random;
 
 public class PreGameController : MonoBehaviour
 {
@@ -10,6 +12,7 @@ public class PreGameController : MonoBehaviour
     [SerializeField] private GameObject continueButton;
     [SerializeField] private GameObject countdownText;
     [SerializeField] private List<GameObject> uiObjectsToEnable;
+    [SerializeField] private List<GameObject> enemiesToPreview;
 
     [Header("Wave Manager")] 
     [SerializeField] private WaveManager waveManager;
@@ -26,7 +29,7 @@ public class PreGameController : MonoBehaviour
 
     public void StartGame() => StartCoroutine(StartGameCoroutine());
 
-    private void Awake()
+    void Awake()
     {
         if (_instance != null && _instance != this)
         {
@@ -39,6 +42,7 @@ public class PreGameController : MonoBehaviour
         cameraMovementController = GetComponent<CameraMovementController>();
         textMeshProUgui = countdownText.GetComponent<TextMeshProUGUI>();
 
+        SpawnEnemyPreviews();
         StartCoroutine(FirstCameraMovement());
     }
     
@@ -104,6 +108,27 @@ public class PreGameController : MonoBehaviour
         yield return new WaitForSeconds(1);
         
         countdownText.SetActive(false);
+    }
+
+    private void SpawnEnemyPreviews()
+    {
+        enemiesToPreview.ForEach(enemyGameObject =>
+        {
+            Vector3 spawnPosition = new Vector3(Random.Range(18f, 22.5f), Random.Range(-2f, 1f), 0);
+
+            var spawnedPrefab = (GameObject) Instantiate(enemyGameObject, spawnPosition, Quaternion.identity);
+
+            Destroy(spawnedPrefab.GetComponent<EnemyController>().GetEntityBehavior());
+            Destroy(spawnedPrefab.GetComponent<EnemyController>());
+            Destroy(spawnedPrefab.GetComponent<EnemyHealth>());
+            
+            spawnedPrefab.transform.GetChild(0)
+                .GetComponent<Animator>().Play("Idle");
+
+            var sortingGroup = spawnedPrefab.GetComponent<SortingGroup>();
+            sortingGroup.sortingLayerName = "Units";
+            sortingGroup.sortingOrder = (int) (100 - spawnPosition.y);
+        });
     }
 
     private void MoveSelectionPanel(Vector3 destination)

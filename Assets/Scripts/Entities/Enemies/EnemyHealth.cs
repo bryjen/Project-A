@@ -14,7 +14,7 @@ public class EnemyHealth : Health
             if (enemies != null) 
                 enemies.Remove(gameObject);
             
-            StartCoroutine(DestroyAllComponents());
+            DestroyAllComponents();
             StartCoroutine(AnimationCoroutine());
         }
         
@@ -23,11 +23,11 @@ public class EnemyHealth : Health
 
     public void SetEnemiesList(List<GameObject> enemies) => this.enemies = enemies;
 
-    private IEnumerator DestroyAllComponents()
+    private void DestroyAllComponents()
     {
         if (entityBehaviorScript != null)
         {
-            yield return StartCoroutine(entityBehaviorScript.StopBehavior());
+            entityBehaviorScript.StopAllCoroutines();
             Destroy(entityBehaviorScript);
         }
         
