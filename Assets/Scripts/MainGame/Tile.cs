@@ -8,15 +8,14 @@ public class Tile : MonoBehaviour
 {
     [SerializeField] private AnimationCurve easingCurve = AnimationCurve.Linear(0.0f, 0.0f, 1.0f, 1.0f);
 
+    public static bool isDisabled;
+
     private GameObject currentSentinel;    //the current sentinel on the tile
     private GameObject sentinelPreview;
     private IEnumerator colorChangerCoroutine;
     private GameData gameData;
 
-    private void Start()
-    {
-        gameData = GameData.Instance;
-    }
+    private void Start() => gameData = GameData.Instance;
 
     private void OnMouseEnter()
     {
@@ -26,7 +25,7 @@ public class Tile : MonoBehaviour
             return;
         }
         
-        if (currentSentinel != null)
+        if (currentSentinel != null || isDisabled)
             return;
         
         StartNewCoroutine(ChangeColor(new Color(1, 1, 1, .5f), .5f));
@@ -47,7 +46,7 @@ public class Tile : MonoBehaviour
         else
             StartNewCoroutine(ChangeColor(new Color(1, 1, 1, 0), .5f));
         
-        if (sentinelPreview is null) 
+        if (sentinelPreview is null || isDisabled) 
             return;
         Destroy(sentinelPreview);
     }
@@ -57,7 +56,7 @@ public class Tile : MonoBehaviour
         if (gameData.isRemovalMode && IsRemovable())
             Remove();
         
-        if (currentSentinel != null) 
+        if (currentSentinel != null || isDisabled) 
             return;
         
         if (gameData.selectedSentinel is null)
@@ -71,6 +70,8 @@ public class Tile : MonoBehaviour
         
         if (sentinelPreview != null)
             Destroy(sentinelPreview);
+
+        gameData.sentinelsPlaced++;
 
         var offset = gameData.selectedSentinel.GetComponent<EntityBehavior>().PlacementOffset;
         var spawnPosition = (Vector2) transform.position + offset;
@@ -91,6 +92,8 @@ public class Tile : MonoBehaviour
     {
         Destroy(currentSentinel.gameObject);
         currentSentinel = null;
+
+        gameData.sentinelsRemoved++;
     }
 
     private IEnumerator ChangeColor(Color color, float duration)

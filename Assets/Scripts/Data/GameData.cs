@@ -15,6 +15,15 @@ public class GameData : MonoBehaviour
     
     [SerializeField] private TextMeshProUGUI textMeshPro;
     
+    //Post game information
+    [HideInInspector] public float timeElapsed;
+    [HideInInspector] public bool hasWon;
+    [HideInInspector] public int sentinelsPlaced;
+    [HideInInspector] public int sentinelsKilled;
+    [HideInInspector] public int sentinelsRemoved;
+    [HideInInspector] public int energyProduced;
+    [HideInInspector] public int energyCollected;
+    
     private int energy;
 
     private void Awake()
@@ -32,15 +41,25 @@ public class GameData : MonoBehaviour
 
     public int GetEnergy() => energy;
 
+    private void Update()
+        => timeElapsed += Time.deltaTime;
+
     public int GetEnergyCostOfSelectedPrefab()
     {
         var sentinelBehavior = selectedSentinel.GetComponent<EntityBehavior>();
         return (int) sentinelBehavior.EnergyCost;
     }
 
-    public void ChangeEnergy(int newValue)
+    public void AddEnergy(int energy)
     {
-        energy = newValue;
+        this.energy += energy;
+        energyCollected += energy;
+        textMeshPro.text = energy.ToString();
+    }
+    
+    public void SubtractEnergy(int energy)
+    {
+        this.energy -= energy;
         textMeshPro.text = energy.ToString();
     }
 }

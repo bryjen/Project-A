@@ -53,8 +53,7 @@ public class EnergyBehavior : MonoBehaviour
         Destroy(GetComponent<Rigidbody2D>());
 
         var gameData = GameData.Instance;
-        gameData.ChangeEnergy(
-            gameData.GetEnergy() +  energyValue);
+        gameData.AddEnergy(energyValue);
 
         StartCoroutine(OnMouseDownCoroutine());
     }

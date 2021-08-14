@@ -9,6 +9,8 @@ public class SentinelHealth : Health
         health = newHealth;
         if (health <= 0)
         {
+            GameData.Instance.sentinelsKilled++;
+            
             if (entityBehaviorScript != null) 
                 Destroy(entityBehaviorScript);
             

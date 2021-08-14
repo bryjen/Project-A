@@ -82,8 +82,7 @@ public class Group : MonoBehaviour
 
             if (spawnedEnemies.Count == 0 && waveManager.waves.Count == 0 && wave.groups.Count == 0)
             {
-
-                GameObject.Find("PostGameManager").GetComponent<OnWavesCompleted>().OnCompleted();
+                GameObject.Find("PostGameManager").GetComponent<OnGameCompleted>().FinishGame(true);
                 yield break;
             }
 

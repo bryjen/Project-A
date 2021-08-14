@@ -28,7 +28,7 @@ public class EnergySiphon : EntityBehavior
         yVelocityRange = new Range(yVelocityRangeInput);
         
         var gameData = GameData.Instance;
-        gameData.ChangeEnergy(gameData.GetEnergy() - EnergyCost);
+        gameData.SubtractEnergy(EnergyCost);
         
         StartCoroutine(StartBehavior());
     }
@@ -47,12 +47,14 @@ public class EnergySiphon : EntityBehavior
     private IEnumerator DefaultBehavior()
     {
         yield return new WaitForSeconds(initialDelay);
+        var gameData = GameData.Instance;
 
         while (true)
         {
             for (int i = 0; i < energyUnitsProduced; i++)
             {
                 SpawnEnergy();
+                gameData.energyProduced += energyAmountPerUnit;
             }
             
             yield return new WaitForSeconds(cooldown);
