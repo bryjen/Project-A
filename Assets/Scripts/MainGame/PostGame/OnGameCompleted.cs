@@ -34,6 +34,7 @@ public class OnGameCompleted : MonoBehaviour
             text.GetComponent<TextMeshProUGUI>().text = "You lose!";
         
         mainPanel.GetComponent<Animator>().Play("FadeIn");
+        
         if (hasWon)
             text.GetComponent<Animator>().Play("OnWin");
         else

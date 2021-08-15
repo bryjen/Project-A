@@ -18,7 +18,7 @@ public class ResultsFormatter : MonoBehaviour
     [Header("Debug Options")] 
     [SerializeField, Tooltip("When starting from the scene itself (no data)")] private bool skipFormatting;
     
-    private void Awake()
+    private void OnEnable()
     {
         Time.timeScale = 1;
 

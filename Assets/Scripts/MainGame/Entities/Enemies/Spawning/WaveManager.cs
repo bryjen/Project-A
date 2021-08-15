@@ -1,12 +1,17 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class WaveManager : MonoBehaviour
 {
     [SerializeField] private GameObject waveText;
-    
+    [SerializeField] private TextMeshProUGUI waveCounter;
+
+    private int currentWave;
+    private int totalWaves;
+
     public List<Wave> waves { get; private set; }
 
     void Awake()
@@ -20,6 +25,9 @@ public class WaveManager : MonoBehaviour
             
             waves.Add(wave);
         }
+
+        totalWaves = waves.Count;
+        currentWave = 0;
     }
 
     public GameObject GetWaveText() => waveText;
@@ -31,6 +39,12 @@ public class WaveManager : MonoBehaviour
 
         waves[0].StartNextGroup();
         waves.RemoveAt(0);
+
+        if (!waveCounter.gameObject.activeSelf)
+            waveCounter.gameObject.SetActive(true);
+        
+        currentWave++;
+        waveCounter.text = $"Waves: {currentWave}/{totalWaves}";
     }
 }
 

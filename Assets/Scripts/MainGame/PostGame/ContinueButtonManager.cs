@@ -6,7 +6,10 @@ using UnityEngine.SceneManagement;
 public class ContinueButtonManager : MonoBehaviour
 {
     [SerializeField] private Scene scene;
-    
+
     public void OnContinueButtonPressed()
-        => SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+    {
+        SceneManager.LoadScene("MainMenu");
+        PlayerPrefs.SetString("canvas", "results");
+    }
 }

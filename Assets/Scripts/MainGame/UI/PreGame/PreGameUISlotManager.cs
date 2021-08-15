@@ -15,6 +15,8 @@ public class PreGameUISlotManager : MonoBehaviour, IPointerClickHandler, IPointe
     
     private static readonly Color defaultColor = new Color(0.53f, 0.53f, 0.47f);
     
+    public bool isSelected { get; private set; }
+    
     private List<GameObject> slotInstances;
     private Image imageComponent;
     private Vector3 unselectedPosition;
@@ -22,7 +24,6 @@ public class PreGameUISlotManager : MonoBehaviour, IPointerClickHandler, IPointe
     private GameData gameData;
     private GameObject newParent;
     private bool isClickable;
-    private bool isSelected;
 
     private bool stopColorChange;
 
@@ -67,6 +68,14 @@ public class PreGameUISlotManager : MonoBehaviour, IPointerClickHandler, IPointe
         
         //Start moving the prefab + darken the color
         StartCoroutine(MoveSlot(preGameSelectedUISlot, slotCopyRectTransform, new Vector3(0, 336 - (slotInstances.Count * 130) + 540, 0)));
+        
+        //Destroy tooltip (if any)
+        try
+        {
+            var tooltip = slotCopy.transform.GetChild(0).GetChild(0).GetChild(1).gameObject;
+            Destroy(tooltip);
+        }
+        catch {} //ignored
         
         ChangeColors(slotCopy);
         

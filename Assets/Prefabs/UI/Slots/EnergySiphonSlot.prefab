@@ -200,6 +200,7 @@ GameObject:
   - component: {fileID: 7893229435178797548}
   - component: {fileID: 7893229435178797551}
   - component: {fileID: 1976420338472414057}
+  - component: {fileID: 8049979409898093962}
   m_Layer: 0
   m_Name: EnergySiphonSlot
   m_TagString: Untagged
@@ -365,3 +366,19 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8049979409898093962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7893229435178797553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fb09af893bbf9a43b25c3bf88554c25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnOnCursorLocation: 1
+  spawnLocation: {x: 0, y: 0, z: 0}
+  uiPrefab: {fileID: 842218159453557176, guid: 58b979036f6dcba4abaca9222e7142c4, type: 3}
+  hoverTimeRequired: 1

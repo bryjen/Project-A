@@ -200,6 +200,7 @@ GameObject:
   - component: {fileID: 7506452752817374790}
   - component: {fileID: 7506452752817374791}
   - component: {fileID: -8032194812178172017}
+  - component: {fileID: 242319137770953715}
   m_Layer: 0
   m_Name: ShooterSlot
   m_TagString: Untagged
@@ -365,3 +366,19 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &242319137770953715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7506452752817374789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fb09af893bbf9a43b25c3bf88554c25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnOnCursorLocation: 1
+  spawnLocation: {x: 0, y: 0, z: 0}
+  uiPrefab: {fileID: 842218159453557176, guid: 3bc358fafdd51d648ae794d8f8f5f94f, type: 3}
+  hoverTimeRequired: 1
