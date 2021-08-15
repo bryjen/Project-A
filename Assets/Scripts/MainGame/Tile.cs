@@ -8,14 +8,37 @@ public class Tile : MonoBehaviour
 {
     [SerializeField] private AnimationCurve easingCurve = AnimationCurve.Linear(0.0f, 0.0f, 1.0f, 1.0f);
 
-    public static bool isDisabled;
+    private static List<Tile> tiles;
+    private static bool isEnabled;
 
     private GameObject currentSentinel;    //the current sentinel on the tile
     private GameObject sentinelPreview;
     private IEnumerator colorChangerCoroutine;
     private GameData gameData;
 
-    private void Start() => gameData = GameData.Instance;
+    public static void SetEnabled(bool isEnabled)
+    {
+        Tile.isEnabled = isEnabled;
+        
+        tiles.ForEach(tile =>
+        {
+            if (tile.sentinelPreview != null)
+                Destroy(tile.sentinelPreview);
+        });
+    }
+    
+    private void Awake()
+    {
+        if (tiles is null) 
+            tiles = new List<Tile>();
+    }
+
+    private void Start()
+    {
+        gameData = GameData.Instance;
+        
+        tiles.Add(this);
+    } 
 
     private void OnMouseEnter()
     {
@@ -25,7 +48,7 @@ public class Tile : MonoBehaviour
             return;
         }
         
-        if (currentSentinel != null || isDisabled)
+        if (currentSentinel != null || !isEnabled)
             return;
         
         StartNewCoroutine(ChangeColor(new Color(1, 1, 1, .5f), .5f));
@@ -36,7 +59,6 @@ public class Tile : MonoBehaviour
             (GameObject) Instantiate(gameData.selectedSentinelPreview, transform.position, Quaternion.identity);
         sentinelPreview.GetComponent<SortingGroup>().sortingOrder = GetOrderInSortingLayer();
         sentinelPreview.transform.SetParent(SpawnRuntimeObjects.Instance.previewSentinelParent.transform);
-
     }
 
     private void OnMouseExit()
@@ -46,7 +68,7 @@ public class Tile : MonoBehaviour
         else
             StartNewCoroutine(ChangeColor(new Color(1, 1, 1, 0), .5f));
         
-        if (sentinelPreview is null || isDisabled) 
+        if (sentinelPreview is null || !isEnabled) 
             return;
         Destroy(sentinelPreview);
     }
@@ -56,7 +78,7 @@ public class Tile : MonoBehaviour
         if (gameData.isRemovalMode && IsRemovable())
             Remove();
         
-        if (currentSentinel != null || isDisabled) 
+        if (currentSentinel != null || !isEnabled) 
             return;
         
         if (gameData.selectedSentinel is null)

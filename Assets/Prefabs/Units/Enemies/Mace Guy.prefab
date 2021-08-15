@@ -67,7 +67,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 324680001627964698}
   animator: {fileID: 324680001627964697}
   animationClipName: Death
-  entityBehaviorScript: {fileID: 0}
+  entityBehaviorScript: {fileID: 324680000590953365}
   boxCollider: {fileID: 324680000590953360}
   rigidBody: {fileID: 324680000590953364}
   health: 220

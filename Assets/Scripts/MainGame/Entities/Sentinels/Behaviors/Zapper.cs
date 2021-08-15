@@ -71,8 +71,7 @@ public class Zapper : EntityBehavior
         yield return new WaitForSeconds(cooldownBeforeAttack);
         
         DealDamage(GetTargetsInRange(attackDetectionRange, rayOffset), damage);
-        //Debug.Log(GetTargetsInRange(attackDetectionRange, rayOffset).Length);
-                
+
         yield return new WaitForSeconds(attackCooldown - cooldownBeforeAttack);
     }
 }

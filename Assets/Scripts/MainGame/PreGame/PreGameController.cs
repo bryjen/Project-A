@@ -42,7 +42,7 @@ public class PreGameController : MonoBehaviour
         cameraMovementController = GetComponent<CameraMovementController>();
         textMeshProUgui = countdownText.GetComponent<TextMeshProUGUI>();
 
-        Tile.isDisabled = true;
+        Tile.SetEnabled(false);
         SpawnEnemyPreviews();
         StartCoroutine(FirstCameraMovement());
     }
@@ -78,7 +78,7 @@ public class PreGameController : MonoBehaviour
         
         waveManager.StartNextWave();
 
-        Tile.isDisabled = false;
+        Tile.SetEnabled(true);
         Destroy(this.gameObject);
         Destroy(slotSelectionPanel);
         Destroy(continueButton);

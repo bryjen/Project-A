@@ -49,6 +49,7 @@ public class PreGameSkipper : MonoBehaviour
         enemySpawner.GetComponent<WaveManager>().StartNextWave();
         
         stuffToBeEnabled.ForEach(o => o.SetActive(true));
+        Tile.SetEnabled(true);
     }
 
 #endif

@@ -13,7 +13,7 @@ public class EnemyHealth : Health
         {
             if (enemies != null) 
                 enemies.Remove(gameObject);
-            
+
             DestroyAllComponents();
             StartCoroutine(AnimationCoroutine());
         }

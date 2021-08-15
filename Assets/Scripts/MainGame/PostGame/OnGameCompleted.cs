@@ -28,7 +28,7 @@ public class OnGameCompleted : MonoBehaviour
         
         onCompletedCanvas.SetActive(true);
 
-        Tile.isDisabled = true;    //disables all tiles from being interacted with
+        Tile.SetEnabled(false);   //disables all tiles from being interacted with
 
         if (!hasWon)
             text.GetComponent<TextMeshProUGUI>().text = "You lose!";

@@ -54,7 +54,7 @@ public class GameData : MonoBehaviour
     {
         this.energy += energy;
         energyCollected += energy;
-        textMeshPro.text = energy.ToString();
+        textMeshPro.text = this.energy.ToString();
     }
     
     public void SubtractEnergy(int energy)
