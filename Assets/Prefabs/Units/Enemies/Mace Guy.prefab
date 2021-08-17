@@ -70,7 +70,7 @@ MonoBehaviour:
   entityBehaviorScript: {fileID: 324680000590953365}
   boxCollider: {fileID: 324680000590953360}
   rigidBody: {fileID: 324680000590953364}
-  health: 220
+  health: 500
 --- !u!114 &324680000590953365
 MonoBehaviour:
   m_ObjectHideFlags: 0

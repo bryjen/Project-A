@@ -11,11 +11,12 @@ public class PreGameController : MonoBehaviour
     [SerializeField] private GameObject slotSelectionPanel;
     [SerializeField] private GameObject continueButton;
     [SerializeField] private GameObject countdownText;
-    [SerializeField] private List<GameObject> uiObjectsToEnable;
+    [SerializeField] private List<GameObject> gameObjectsToEnable;
     [SerializeField] private List<GameObject> enemiesToPreview;
 
     [Header("Wave Manager")] 
     [SerializeField] private WaveManager waveManager;
+    [SerializeField] private float delayBeforeFirstSpawn;
     
     private static PreGameController _instance;
     public static PreGameController Instance { get { return _instance;  } }
@@ -67,18 +68,18 @@ public class PreGameController : MonoBehaviour
         
         yield return StartCoroutine(StartCountdown());
         
-        uiObjectsToEnable.ForEach(o => o.SetActive(true));
+        Tile.SetEnabled(true);
+        gameObjectsToEnable.ForEach(o => o.SetActive(true));
         UISlotManager.EnableAllSlots();
         foreach (var slot in slotInstances)
         {
             slot.GetComponent<UISlotManager>().enabled = true;
         }
         
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(delayBeforeFirstSpawn);
         
         waveManager.StartNextWave();
-
-        Tile.SetEnabled(true);
+        
         Destroy(this.gameObject);
         Destroy(slotSelectionPanel);
         Destroy(continueButton);

@@ -35,7 +35,7 @@ public class GameData : MonoBehaviour
         }
 
         _instance = this;
-        energy = 5000;
+        energy = 100;
         textMeshPro.text = energy.ToString();
     }
 
@@ -60,6 +60,6 @@ public class GameData : MonoBehaviour
     public void SubtractEnergy(int energy)
     {
         this.energy -= energy;
-        textMeshPro.text = energy.ToString();
+        textMeshPro.text = this.energy.ToString();
     }
 }

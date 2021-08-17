@@ -53,7 +53,7 @@ public class EnergyDropper : MonoBehaviour
 
     private void InstantiateEnergyPrefab()
     {
-         var spawnPositon = new Vector2(xAsisSpawnRange.GetRandomValue, 7);
+         var spawnPositon = new Vector3(xAsisSpawnRange.GetRandomValue, 7, -.5f);
          var destination = new Vector2(spawnPositon.x, yAxisSpawnRange.GetRandomValue);
          var spawnedEnergy = (GameObject) Instantiate(energyPrefab, spawnPositon, Quaternion.identity);
          

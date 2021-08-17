@@ -57,7 +57,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   isDirectedLeft: 0
-  EnergyCost: 150
+  EnergyCost: 125
   PlacementOffset: {x: 0, y: 0.2}
   projectilePrefab: {fileID: 7524895788826907731, guid: 2a3eb6d07967c0d40a28c0401f0b9194, type: 3}
   velocity: 7

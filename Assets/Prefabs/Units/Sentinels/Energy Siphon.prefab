@@ -96,14 +96,14 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   isDirectedLeft: 0
-  EnergyCost: 100
+  EnergyCost: 75
   PlacementOffset: {x: 0, y: 0}
   energyPrefab: {fileID: 7135476173983753991, guid: 5a254cc26ff559e4f9cb650f4f6a5725, type: 3}
   spawnOffset: {x: 0, y: 1}
-  xVelocityRangeInput: -3 3
-  yVelocityRangeInput: 5 6
-  initialDelay: 2
-  cooldown: 5
+  xVelocityRangeInput: -3.5 3.5
+  yVelocityRangeInput: 6 7
+  initialDelay: 5
+  cooldown: 8
   energyUnitsProduced: 1
   energyAmountPerUnit: 25
   animator: {fileID: 8746348725071452158}

@@ -80,13 +80,17 @@ public class Group : MonoBehaviour
         {
             timeElapsed += Time.deltaTime;
 
-            if (spawnedEnemies.Count == 0 && waveManager.waves.Count == 0 && wave.groups.Count == 0)
+            var isLastWave = waveManager.waves.Count == 0;
+            var isLastGroupOfWave = wave.groups.Count == 0;
+            
+            if (spawnedEnemies.Count == 0 && isLastWave  && isLastGroupOfWave)
             {
                 GameObject.Find("PostGameManager").GetComponent<OnGameCompleted>().FinishGame(true);
                 yield break;
             }
 
-            if (timeElapsed >= waitDuration || spawnedEnemies.Count == 0)
+            //if its NOT the final wave and the elapsed or all the enemies have died
+            if (!(isLastWave && isLastGroupOfWave) &&  (timeElapsed >= waitDuration || spawnedEnemies.Count == 0))
                 break;
 
             yield return null;
@@ -95,10 +99,7 @@ public class Group : MonoBehaviour
         wave.StartNextGroup();
     }
 
-    //private void Update() => 
-        //Debug.Log($"{SpawnRuntimeObjects.Instance.spawnedEnemyParent.transform.childCount}, , {waveManager.waves.Count}, {wave.groups.Count}");
-
-        private Vector3 GetSpawnLocation(int row)
+    private Vector3 GetSpawnLocation(int row)
     {
         switch (row)
         {

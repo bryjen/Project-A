@@ -35,7 +35,10 @@ public class WaveManager : MonoBehaviour
     public void StartNextWave()
     {
         if (waves.Count == 0)
+        {
+            //GameObject.Find("PostGameManager").GetComponent<OnGameCompleted>().FinishGame(true);
             return;
+        }
 
         waves[0].StartNextGroup();
         waves.RemoveAt(0);

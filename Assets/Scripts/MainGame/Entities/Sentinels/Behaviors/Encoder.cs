@@ -22,8 +22,11 @@ public class Encoder : EntityBehavior
     [SerializeField] private GameObject temporarySpriteGameObject;
 
     private void Start()
-    {    //todo remove this when done
+    {
         StartCoroutine(StartBehavior());
+        
+        var gameData = GameData.Instance;
+        gameData.SubtractEnergy(EnergyCost);
     }
     
     public override IEnumerator StartBehavior()

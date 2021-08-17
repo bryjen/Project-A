@@ -138,7 +138,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   isDirectedLeft: 0
-  EnergyCost: 75
+  EnergyCost: 100
   PlacementOffset: {x: 0, y: 0}
   initialDelay: 1
   attackCooldown: 0.8

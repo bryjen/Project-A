@@ -10,6 +10,8 @@ public class Tile : MonoBehaviour
 
     private static List<Tile> tiles;
     private static bool isEnabled;
+    private static GameObject errorMessage;
+    private static IEnumerator errorMessageCoroutine;
 
     private GameObject currentSentinel;    //the current sentinel on the tile
     private GameObject sentinelPreview;
@@ -31,6 +33,13 @@ public class Tile : MonoBehaviour
     {
         if (tiles is null) 
             tiles = new List<Tile>();
+
+        if (errorMessage is null)
+        {
+            errorMessage = GameObject.Find("NotEnoughEnergyMessage");
+            errorMessage.SetActive(false);
+        }
+            
     }
 
     private void Start()
@@ -86,7 +95,11 @@ public class Tile : MonoBehaviour
 
         if (gameData.GetEnergyCostOfSelectedPrefab() > gameData.GetEnergy())    //if the energy cost of the sentinel is greater than the current energy
         {
-            //todo display like an error message saying not enough energy yk
+            if (errorMessageCoroutine != null)
+                StopCoroutine(errorMessageCoroutine);
+            
+            errorMessageCoroutine = DisplayAndRemoveErrorMessage();
+            StartCoroutine(errorMessageCoroutine);
             return;
         }
         
@@ -104,7 +117,7 @@ public class Tile : MonoBehaviour
         
         currentSentinel.transform.SetParent(SpawnRuntimeObjects.Instance.spawnedSentinelParent.transform);
 
-        //UISlotManager.DeselectAll();
+        UISlotManager.DeselectAll();
     }
 
     private bool IsRemovable()
@@ -132,6 +145,15 @@ public class Tile : MonoBehaviour
         }
 
         colorChangerCoroutine = null;
+    }
+
+    private IEnumerator DisplayAndRemoveErrorMessage()
+    {
+        errorMessage.SetActive(true);
+        
+        yield return new WaitForSeconds(1.5f);
+        
+        errorMessage.SetActive(false);
     }
 
     private void StartNewCoroutine(IEnumerator coroutine)

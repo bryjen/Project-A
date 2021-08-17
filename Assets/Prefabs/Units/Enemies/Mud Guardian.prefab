@@ -93,7 +93,7 @@ MonoBehaviour:
   isDirectedLeft: 1
   EnergyCost: 0
   PlacementOffset: {x: 0, y: 0}
-  movementSpeedVelocity: 0.75
+  movementSpeedVelocity: 0.65
   attack1Range: 0.5
   attack1Damage: 20
   isSpecialAttackEnabled: 1

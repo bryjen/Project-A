@@ -21,8 +21,11 @@ public class Zapper : EntityBehavior
     private bool isInitialized;
     
     private void Start()
-    {    //todo remove this when done
+    {
         StartCoroutine(StartBehavior());
+        
+        var gameData = GameData.Instance;
+        gameData.SubtractEnergy(EnergyCost);
     }
     
     public override IEnumerator StartBehavior()

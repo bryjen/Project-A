@@ -35,21 +35,18 @@ public class Shooter : EntityBehavior
     private bool isInitialized;
 
     private void Start()
-    {    //todo remove this when done
+    {
         StartCoroutine(StartBehavior());
+        
+        var gameData = GameData.Instance;
+        gameData.SubtractEnergy(EnergyCost);
     }
     
 
     public override IEnumerator StartBehavior()
     {
         if (!isInitialized)
-        {
-            var gameData = GameData.Instance;
-            gameData.SubtractEnergy(EnergyCost);
-            
             yield return StartCoroutine(Initialize());
-        }
-            
         
         StartCoroutine(DefaultBehavior());
     }
